@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GadgetStore Pro - Panel Pembeli</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #1e293b;
+            padding: 30px;
+        }
+        /* Navbar Utama */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 15px 30px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 100;
+        }
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        .nav-link:hover {
+            color: #3b82f6;
+        }
+
+        /* --- CSS MENU DROPDOWN KATEGORI --- */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 180px;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            top: 150%;
+            left: -20px;
+            overflow: hidden;
+            z-index: 200;
+        }
+        .dropdown-content.show {
+            display: block;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        .dropdown-content a {
+            color: #475569;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CSS MODAL / POP-UP KERANJANG & PESAN --- */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .cart-modal.show {
+            display: flex;
+        }
+        .cart-modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .cart-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .cart-modal-header h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+        .cart-items-list {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-item-title {
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .cart-item-price {
+            color: #3b82f6;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .empty-cart-text {
+            text-align: center;
+            color: #94a3b8;
+            padding: 20px 0;
+            font-style: italic;
+        }
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .checkout-btn:hover {
+            background: #334155;
+        }
+        
+        /* --- CSS MODAL CHECKOUT PEMBELIAN --- */
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .checkout-modal.show {
+            display: flex;
+        }
+        .checkout-modal-content {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #3b82f6;
+        }
+
+        /* --- CSS Toast Notification Modern --- */
+        #toastContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        .toast {
+            background: #0f172a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        /* ----------------------------------- */
+
+        .nav-logout {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .nav-logout:hover {
+            background: #fecaca;
+        }
+
+        /* Area Pencarian dan Kategori Terpisah */
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .cat-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cat-btn.active, .cat-btn:hover {
+            background: #0f172a;
+            color: white;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 0.95rem;
+            color: #1e293b;
+        }
+
+        /* Katalog Grid */
+        .catalog-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+        .product-card {
+            background: white;
+            padding: 20px;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1 1 280px;
+            max-width: 350px;
+        }
+        .product-card.hidden {
+            display: none !important;
+        }
+        .product-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 15px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .badge-process { background: #dcfce7; color: #166534; }
+        .badge-pending { background: #fee2e2; color: #991b1b; }
+        .badge-sent { background: #e0f2fe; color: #0369a1; }
+        .badge-done { background: #f1f5f9; color: #475569; }
+        
+        .title { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
+        .price { font-size: 1.15rem; font-weight: 700; color: #3b82f6; margin-bottom: 10px; }
+        .desc { font-size: 0.9rem; color: #475569; margin-bottom: 15px; line-height: 1.5; }
+        
+        /* Frame Video Review */
+        .product-card iframe {
+            width: 100%;
+            height: 160px;
+            border-radius: 12px;
+            border: none;
+            background: #000;
+            margin-bottom: 15px;
+        }
+        
+        /* Wrapper Tombol Aksi */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #0f172a;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .buy-btn:hover { background: #334155; }
+
+        .cart-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #fbbf24;
+            color: #0f172a;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .cart-btn:hover { background: #f59e0b; }
+    </style>
+</head>
+<body>
+
+    <!-- Container Toast Notification -->
+    <div id="toastContainer"></div>
+
+    <!-- Navbar Atas -->
+    <nav class="navbar">
+        <div class="nav-brand">GadgetStore Pro</div>
+        <div class="nav-menu">
+            
+            <!-- Menu Kategori dengan Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link" id="kategoriDropdownBtn">Kategori ▼</a>
+                <div class="dropdown-content" id="kategoriDropdown">
+                    <a href="#" class="dropdown-item" data-filter="all">Semua Produk</a>
+                    <a href="#" class="dropdown-item" data-filter="smartphone">📱 Smartphone</a>
+                    <a href="#" class="dropdown-item" data-filter="laptop">💻 Laptop</a>
+                    <a href="#" class="dropdown-item" data-filter="audio">🎧 Audio</a>
+                    <a href="#" class="dropdown-item" data-filter="wearable">⌚ Wearable</a>
+                    <a href="#" class="dropdown-item" data-filter="kamera">📷 Kamera</a>
+                </div>
+            </div>
+
+            <!-- Menu Keranjang -->
+            <a href="#" class="nav-link" id="cartMenuLink">🛒 Keranjang (0)</a>
+            
+            <!-- Menu Pesan yang terhubung ke daftar pesanan -->
+            <a href="#" class="nav-link" id="pesanMenuLink" onclick="bukaMenuPesan(event)">Pesan (0)</a>
+            <a href="#" class="nav-logout">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Pop-up Modal Keranjang Belanja -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h3>Keranjang Belanja Kamu</h3>
+                <button class="close-modal" id="closeCartModal">&times;</button>
+            </div>
+            <div class="cart-items-list" id="cartItemsContainer">
+                <div class="empty-cart-text">Keranjang kamu masih kosong.</div>
+            </div>
+            <button class="checkout-btn" onclick="bukaCheckoutDariKeranjang()">Lanjut ke Pembayaran</button>
+        </div>
+    </div>
+
+    <!-- Pop-up Modal Menu Pesan (Barang yang dibeli) -->
+    <div class="cart-modal" id="pesanModal">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h3>Daftar Pesanan Saya</h3>
+                <button class="close-modal" id="closePesanModal">&times;</button>
+            </div>
+            <div class="cart-items-list" id="pesanItemsContainer">
+                <div class="empty-cart-text">Belum ada pesanan yang dibuat.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form Checkout Beli Sekarang -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-modal-content">
+            <div class="cart-modal-header" style="margin-bottom: 15px;">
+                <h3>Formulir Pembelian</h3>
+                <button class="close-modal" id="closeCheckoutModal">&times;</button>
+            </div>
+            <p id="productNameDisplay" style="margin-bottom: 15px; color: #475569; font-weight: 600; font-size: 0.95rem;"></p>
+            
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="custName" placeholder="Masukkan nama lengkap...">
+            </div>
+            <div class="form-group">
+                <label>No. Telepon / WhatsApp</label>
+                <input type="tel" id="custPhone" placeholder="Contoh: 08123456789">
+            </div>
+            <div class="form-group">
+                <label>Alamat Lengkap Pengiriman</label>
+                <input type="text" id="custAddress" placeholder="Jalan, Nomor Rumah, Kota...">
+            </div>
+            <div class="form-group">
+                <label>Metode Pembayaran</label>
+                <select id="payMethod">
+                    <option value="Transfer Bank">Transfer Bank (BCA/Mandiri/BNI)</option>
+                    <option value="E-Wallet">E-Wallet (Dana/OVO/Gopay)</option>
+                    <option value="COD">Bayar di Tempat / COD</option>
+                </select>
+            </div>
+
+            <button class="checkout-btn" onclick="prosesCheckout()">Konfirmasi & Pesan Sekarang</button>
+        </div>
+    </div>
+
+    <!-- Bar Kategori & Pencarian -->
+    <div class="action-bar">
+        <div class="category-filters">
+            <button class="cat-btn active" data-filter="all">Semua</button>
+            <button class="cat-btn" data-filter="smartphone">Smartphone</button>
+            <button class="cat-btn" data-filter="laptop">Laptop</button>
+            <button class="cat-btn" data-filter="audio">Audio</button>
+            <button class="cat-btn" data-filter="wearable">Wearable</button>
+            <button class="cat-btn" data-filter="kamera">Kamera</button>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Cari gadget impianmu...">
+        </div>
+    </div>
+
+    <!-- Katalog Produk -->
+    <div class="catalog-container" id="catalogContainer">
+        
+        <!-- Produk 1: iPhone 13 -->
+        <div class="product-card" data-category="smartphone">
+            <div>
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800" class="product-img">
+                <span class="badge badge-process">Pesanan Diproses</span>
+                <div class="title">iPhone 13</div>
+                <div class="price">Rp 11.999.000</div>
+                <div class="desc">Chip A15 Bionic, sistem kamera ganda canggih, dan daya tahan baterai luar biasa.</div>
+                <iframe src="https://www.youtube.com/embed/Fa2EaYPn4N0" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('iPhone 13', 'Rp 11.999.000', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('iPhone 13', 'Rp 11.999.000', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+        
+        <!-- Produk 2: MacBook -->
+        <div class="product-card" data-category="laptop">
+            <div>
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800" class="product-img">
+                <span class="badge badge-pending">Belum Dibayar</span>
+                <div class="title">MacBook</div>
+                <div class="price">Rp 16.500.000</div>
+                <div class="desc">Ditenagai Apple Silicon berperforma tinggi dengan desain tipis dan elegan.</div>
+                <iframe src="https://www.youtube.com/embed/t7Q8D2JdS7s" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('MacBook', 'Rp 16.500.000', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('MacBook', 'Rp 16.500.000', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Produk 3: Headset Gaming -->
+        <div class="product-card" data-category="audio">
+            <div>
+                <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800" class="product-img">
+                <span class="badge badge-sent">Pesanan Dikirim</span>
+                <div class="title">Headset Gaming RGB</div>
+                <div class="price">Rp 850.000</div>
+                <div class="desc">Suara surround 7.1 yang menggelegar, mic jernih, dan lampu RGB keren untuk gaming.</div>
+                <iframe src="https://www.youtube.com/embed/u3hmcsfjISc" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('Headset Gaming RGB', 'Rp 850
