@@ -82,3 +82,838 @@
             font-size: 0.9rem;
             font-weight: 600;
             transition: background 0.2s, color 0.2s;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CSS MODAL / POP-UP KERANJANG & PESAN --- */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .cart-modal.show {
+            display: flex;
+        }
+        .cart-modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .cart-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .cart-modal-header h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+        .cart-items-list {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-item-title {
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .cart-item-price {
+            color: #3b82f6;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .empty-cart-text {
+            text-align: center;
+            color: #94a3b8;
+            padding: 20px 0;
+            font-style: italic;
+        }
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .checkout-btn:hover {
+            background: #334155;
+        }
+        
+        /* --- CSS MODAL CHECKOUT PEMBELIAN --- */
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .checkout-modal.show {
+            display: flex;
+        }
+        .checkout-modal-content {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #3b82f6;
+        }
+
+        /* --- CSS Toast Notification Modern --- */
+        #toastContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        .toast {
+            background: #0f172a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        /* ----------------------------------- */
+
+        .nav-logout {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .nav-logout:hover {
+            background: #fecaca;
+        }
+
+        /* Area Pencarian dan Kategori Terpisah */
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .cat-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cat-btn.active, .cat-btn:hover {
+            background: #0f172a;
+            color: white;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 0.95rem;
+            color: #1e293b;
+        }
+
+        /* Katalog Grid */
+        .catalog-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+        .product-card {
+            background: white;
+            padding: 20px;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1 1 280px;
+            max-width: 350px;
+        }
+        .product-card.hidden {
+            display: none !important;
+        }
+        .product-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 15px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .badge-process { background: #dcfce7; color: #166534; }
+        .badge-pending { background: #fee2e2; color: #991b1b; }
+        .badge-sent { background: #e0f2fe; color: #0369a1; }
+        .badge-done { background: #f1f5f9; color: #475569; }
+        
+        .title { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
+        .price { font-size: 1.15rem; font-weight: 700; color: #3b82f6; margin-bottom: 10px; }
+        .desc { font-size: 0.9rem; color: #475569; margin-bottom: 15px; line-height: 1.5; }
+        
+        /* Frame Video Review */
+        .product-card iframe {
+            width: 100%;
+            height: 160px;
+            border-radius: 12px;
+            border: none;
+            background: #000;
+            margin-bottom: 15px;
+        }
+        
+        /* Wrapper Tombol Aksi */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #0f172a;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .buy-btn:hover { background: #334155; }
+
+        .cart-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #fbbf24;
+            color: #0f172a;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .cart-btn:hover { background: #f59e0b; }
+    </style>
+</head>
+<body>
+
+    <!-- Container Toast Notification -->
+    <div id="toastContainer"></div>
+
+    <!-- Navbar Atas -->
+    <nav class="navbar">
+        <div class="nav-brand">GadgetStore Pro</div>
+        <div class="nav-menu">
+            
+            <!-- Menu Kategori dengan Dropdown -->
+            <div class="dropdown">
+                <a class="nav-link" id="kategoriDropdownBtn">Kategori ▼</a>
+                <div class="dropdown-content" id="kategoriDropdown">
+                    <a href="#" class="dropdown-item" data-filter="all">Semua Produk</a>
+                    <a href="#" class="dropdown-item" data-filter="smartphone">📱 Smartphone</a>
+                    <a href="#" class="dropdown-item" data-filter="laptop">💻 Laptop</a>
+                    <a href="#" class="dropdown-item" data-filter="audio">🎧 Audio</a>
+                    <a href="#" class="dropdown-item" data-filter="wearable">⌚ Wearable</a>
+                    <a href="#" class="dropdown-item" data-filter="kamera">📷 Kamera</a>
+                </div>
+            </div>
+
+            <!-- Menu Keranjang -->
+            <a href="#" class="nav-link" id="cartMenuLink">🛒 Keranjang (0)</a>
+            
+            <!-- Menu Pesan yang terhubung ke daftar pesanan -->
+            <a href="#" class="nav-link" id="pesanMenuLink" onclick="bukaMenuPesan(event)">Pesan (0)</a>
+            <a href="#" class="nav-logout">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Pop-up Modal Keranjang Belanja -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h3>Keranjang Belanja Kamu</h3>
+                <button class="close-modal" id="closeCartModal">&times;</button>
+            </div>
+            <div class="cart-items-list" id="cartItemsContainer">
+                <div class="empty-cart-text">Keranjang kamu masih kosong.</div>
+            </div>
+            <button class="checkout-btn" onclick="bukaCheckoutDariKeranjang()">Lanjut ke Pembayaran</button>
+        </div>
+    </div>
+
+    <!-- Pop-up Modal Menu Pesan (Barang yang dibeli) -->
+    <div class="cart-modal" id="pesanModal">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h3>Daftar Pesanan Saya</h3>
+                <button class="close-modal" id="closePesanModal">&times;</button>
+            </div>
+            <div class="cart-items-list" id="pesanItemsContainer">
+                <div class="empty-cart-text">Belum ada pesanan yang dibuat.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form Checkout Beli Sekarang -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-modal-content">
+            <div class="cart-modal-header" style="margin-bottom: 15px;">
+                <h3>Formulir Pembelian</h3>
+                <button class="close-modal" id="closeCheckoutModal">&times;</button>
+            </div>
+            <p id="productNameDisplay" style="margin-bottom: 15px; color: #475569; font-weight: 600; font-size: 0.95rem;"></p>
+            
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="custName" placeholder="Masukkan nama lengkap...">
+            </div>
+            <div class="form-group">
+                <label>No. Telepon / WhatsApp</label>
+                <input type="tel" id="custPhone" placeholder="Contoh: 08123456789">
+            </div>
+            <div class="form-group">
+                <label>Alamat Lengkap Pengiriman</label>
+                <input type="text" id="custAddress" placeholder="Jalan, Nomor Rumah, Kota...">
+            </div>
+            <div class="form-group">
+                <label>Metode Pembayaran</label>
+                <select id="payMethod">
+                    <option value="Transfer Bank">Transfer Bank (BCA/Mandiri/BNI)</option>
+                    <option value="E-Wallet">E-Wallet (Dana/OVO/Gopay)</option>
+                    <option value="COD">Bayar di Tempat / COD</option>
+                </select>
+            </div>
+
+            <button class="checkout-btn" onclick="prosesCheckout()">Konfirmasi & Pesan Sekarang</button>
+        </div>
+    </div>
+
+    <!-- Bar Kategori & Pencarian -->
+    <div class="action-bar">
+        <div class="category-filters">
+            <button class="cat-btn active" data-filter="all">Semua</button>
+            <button class="cat-btn" data-filter="smartphone">Smartphone</button>
+            <button class="cat-btn" data-filter="laptop">Laptop</button>
+            <button class="cat-btn" data-filter="audio">Audio</button>
+            <button class="cat-btn" data-filter="wearable">Wearable</button>
+            <button class="cat-btn" data-filter="kamera">Kamera</button>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Cari gadget impianmu...">
+        </div>
+    </div>
+
+    <!-- Katalog Produk -->
+    <div class="catalog-container" id="catalogContainer">
+        
+        <!-- Produk 1: iPhone 13 -->
+        <div class="product-card" data-category="smartphone">
+            <div>
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800" class="product-img">
+                <span class="badge badge-process">Pesanan Diproses</span>
+                <div class="title">iPhone 13</div>
+                <div class="price">Rp 11.999.000</div>
+                <div class="desc">Chip A15 Bionic, sistem kamera ganda canggih, dan daya tahan baterai luar biasa.</div>
+                <iframe src="https://www.youtube.com/embed/Fa2EaYPn4N0" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('iPhone 13', 'Rp 11.999.000', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('iPhone 13', 'Rp 11.999.000', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+        
+        <!-- Produk 2: MacBook -->
+        <div class="product-card" data-category="laptop">
+            <div>
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800" class="product-img">
+                <span class="badge badge-pending">Belum Dibayar</span>
+                <div class="title">MacBook</div>
+                <div class="price">Rp 16.500.000</div>
+                <div class="desc">Ditenagai Apple Silicon berperforma tinggi dengan desain tipis dan elegan.</div>
+                <iframe src="https://www.youtube.com/embed/t7Q8D2JdS7s" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('MacBook', 'Rp 16.500.000', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('MacBook', 'Rp 16.500.000', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Produk 3: Headset Gaming -->
+        <div class="product-card" data-category="audio">
+            <div>
+                <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800" class="product-img">
+                <span class="badge badge-sent">Pesanan Dikirim</span>
+                <div class="title">Headset Gaming RGB</div>
+                <div class="price">Rp 850.000</div>
+                <div class="desc">Suara surround 7.1 yang menggelegar, mic jernih, dan lampu RGB keren untuk gaming.</div>
+                <iframe src="https://www.youtube.com/embed/u3hmcsfjISc" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('Headset Gaming RGB', 'Rp 850.000', 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('Headset Gaming RGB', 'Rp 850.000', 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Produk 4: Smart Watch -->
+        <div class="product-card" data-category="wearable">
+            <div>
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800" class="product-img">
+                <span class="badge badge-done">Pesanan Selesai</span>
+                <div class="title">Smart Watch</div>
+                <div class="price">Rp 4.500.000</div>
+                <div class="desc">Pantau kesehatan harian, kebugaran, dan notifikasi langsung dari pergelangan tangan.</div>
+                <iframe src="https://www.youtube.com/embed/1dlFBUcytZw" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('Smart Watch', 'Rp 4.500.000', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('Smart Watch', 'Rp 4.500.000', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Produk 5: HP Xiaomi -->
+        <div class="product-card" data-category="smartphone">
+            <div>
+                <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800" class="product-img">
+                <span class="badge badge-pending">Belum Dibayar</span>
+                <div class="title">Xiaomi Smartphone</div>
+                <div class="price">Rp 4.999.000</div>
+                <div class="desc">Performa flagship killer, kamera tajam, dan pengisian daya ngebut khas Xiaomi.</div>
+                <iframe src="https://www.youtube.com/embed/lOilUTkEMSk" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('Xiaomi Smartphone', 'Rp 4.999.000', 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('Xiaomi Smartphone', 'Rp 4.999.000', 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Produk 6: Kamera DSLR Canon -->
+        <div class="product-card" data-category="kamera">
+            <div>
+                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800" class="product-img">
+                <span class="badge badge-process">Pesanan Diproses</span>
+                <div class="title">Kamera DSLR Canon</div>
+                <div class="price">Rp 6.750.000</div>
+                <div class="desc">Kamera ideal untuk kreator konten dan fotografer dengan hasil foto tajam serta video Full HD.</div>
+                <iframe src="https://www.youtube.com/embed/msVSnuaxuRs" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('Kamera DSLR Canon', 'Rp 6.750.000', 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('Kamera DSLR Canon', 'Rp 6.750.000', 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Produk 7: Tablet Android Pro -->
+        <div class="product-card" data-category="smartphone">
+            <div>
+                <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800" class="product-img">
+                <span class="badge badge-sent">Pesanan Dikirim</span>
+                <div class="title">Tablet Android Pro</div>
+                <div class="price">Rp 5.400.000</div>
+                <div class="desc">Layar luas beresolusi tinggi, mendukung multitasking lancar untuk bekerja maupun hiburan.</div>
+                <iframe src="https://www.youtube.com/embed/DajRdqQ6sKE" allowfullscreen></iframe>
+            </div>
+            <div class="action-buttons">
+                <button class="cart-btn" onclick="tambahKeKeranjang('Tablet Android Pro', 'Rp 5.400.000', 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800')">+ Keranjang</button>
+                <button class="buy-btn" onclick="bukaCheckout('Tablet Android Pro', 'Rp 5.400.000', 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800')">Beli Sekarang</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Array untuk menyimpan data keranjang dan pesanan
+        let keranjangBelanja = [];
+        let daftarPesanan = [];
+
+        // --- SCRIPT DROPDOWN MENU KATEGORI ---
+        const dropdownBtn = document.getElementById('kategoriDropdownBtn');
+        const dropdownContent = document.getElementById('kategoriDropdown');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+        dropdownBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            dropdownContent.classList.toggle('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!e.target.matches('#kategoriDropdownBtn') && !e.target.matches('.nav-link')) {
+                if (dropdownContent.classList.contains('show')) {
+                    dropdownContent.classList.remove('show');
+                }
+            }
+        });
+
+        // --- SCRIPT MODAL KERANJANG ---
+        const cartMenuLink = document.getElementById('cartMenuLink');
+        const cartModal = document.getElementById('cartModal');
+        const closeCartModal = document.getElementById('closeCartModal');
+        const cartItemsContainer = document.getElementById('cartItemsContainer');
+
+        cartMenuLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderIsiKeranjang();
+            cartModal.classList.add('show');
+        });
+
+        closeCartModal.addEventListener('click', () => {
+            cartModal.classList.remove('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.classList.remove('show');
+            }
+        });
+
+        function renderIsiKeranjang() {
+            cartItemsContainer.innerHTML = '';
+            
+            if (keranjangBelanja.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart-text">Keranjang kamu masih kosong.</div>';
+                return;
+            }
+
+            keranjangBelanja.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'cart-item-row';
+                row.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="${item.foto}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">
+                        <div class="cart-item-info">
+                            <span class="cart-item-title">${item.nama}</span>
+                            <span class="cart-item-price">${item.harga}</span>
+                        </div>
+                    </div>
+                    <button onclick="hapusDariKeranjang(${index})" style="background:#fee2e2; color:#991b1b; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-weight:bold;">Hapus</button>
+                `;
+                cartItemsContainer.appendChild(row);
+            });
+        }
+
+        function hapusDariKeranjang(index) {
+            const namaDihapus = keranjangBelanja[index].nama;
+            keranjangBelanja.splice(index, 1);
+            cartMenuLink.textContent = `🛒 Keranjang (${keranjangBelanja.length})`;
+            renderIsiKeranjang();
+            showToast(`"${namaDihapus}" telah dihapus dari keranjang.`);
+        }
+
+        // --- SCRIPT MODAL PESAN SAYA ---
+        const pesanModal = document.getElementById('pesanModal');
+        const closePesanModal = document.getElementById('closePesanModal');
+        const pesanItemsContainer = document.getElementById('pesanItemsContainer');
+        const pesanMenuLink = document.getElementById('pesanMenuLink');
+
+        function bukaMenuPesan(e) {
+            e.preventDefault();
+            renderDaftarPesan();
+            pesanModal.classList.add('show');
+        }
+
+        closePesanModal.addEventListener('click', () => {
+            pesanModal.classList.remove('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === pesanModal) {
+                pesanModal.classList.remove('show');
+            }
+        });
+
+        function renderDaftarPesan() {
+            pesanItemsContainer.innerHTML = '';
+
+            if (daftarPesanan.length === 0) {
+                pesanItemsContainer.innerHTML = '<div class="empty-cart-text">Belum ada pesanan yang dibuat.</div>';
+                return;
+            }
+
+            daftarPesanan.forEach((pesanan, index) => {
+                const row = document.createElement('div');
+                row.className = 'cart-item-row';
+                row.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+                        <img src="${pesanan.foto}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+                        <div class="cart-item-info" style="flex-grow: 1;">
+                            <span class="cart-item-title">${pesanan.nama}</span>
+                            <span class="cart-item-price">${pesanan.harga}</span>
+                            <span style="font-size: 0.75rem; color: #166534; font-weight: bold; background: #dcfce7; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; width: fit-content;">Status: ${pesanan.status}</span>
+                        </div>
+                    </div>
+                `;
+                pesanItemsContainer.appendChild(row);
+            });
+        }
+
+        // --- SCRIPT MODAL CHECKOUT PEMBELIAN ---
+        const checkoutModal = document.getElementById('checkoutModal');
+        const closeCheckoutModal = document.getElementById('closeCheckoutModal');
+        const productNameDisplay = document.getElementById('productNameDisplay');
+        
+        let itemCheckoutSementara = null; // Menyimpan produk yang sedang dibeli
+
+        function bukaCheckout(nama, harga, foto) {
+            itemCheckoutSementara = [{ nama, harga, foto }];
+            productNameDisplay.textContent = `Produk: ${nama} (${harga})`;
+            checkoutModal.classList.add('show');
+        }
+
+        function bukaCheckoutDariKeranjang() {
+            if (keranjangBelanja.length === 0) {
+                alert("Keranjang kamu masih kosong!");
+                return;
+            }
+            
+            cartModal.classList.remove('show');
+            itemCheckoutSementara = [...keranjangBelanja]; // Ambil semua dari keranjang
+            
+            let daftarProduk = keranjangBelanja.map(item => `${item.nama} (${item.harga})`).join(', ');
+            productNameDisplay.textContent = `Produk dari Keranjang: ${daftarProduk}`;
+            checkoutModal.classList.add('show');
+        }
+
+        closeCheckoutModal.addEventListener('click', () => {
+            checkoutModal.classList.remove('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === checkoutModal) {
+                checkoutModal.classList.remove('show');
+            }
+        });
+
+        function prosesCheckout() {
+            const nama = document.getElementById('custName').value.trim();
+            const telp = document.getElementById('custPhone').value.trim();
+            const alamat = document.getElementById('custAddress').value.trim();
+            const metode = document.getElementById('payMethod').value;
+
+            if (nama === "" || telp === "" || alamat === "") {
+                alert("Harap lengkapi semua data form (Nama, No Telepon, dan Alamat)!");
+                return;
+            }
+
+            // Masukkan item yang dibeli ke dalam daftar pesanan dengan status default "Pesanan Diproses"
+            if (itemCheckoutSementara && itemCheckoutSementara.length > 0) {
+                itemCheckoutSementara.forEach(item => {
+                    daftarPesanan.push({
+                        nama: item.nama,
+                        harga: item.harga,
+                        foto: item.foto,
+                        status: "Pesanan Diproses"
+                    });
+                });
+            }
+
+            // Update label navbar menu pesan
+            pesanMenuLink.textContent = `Pesan (${daftarPesanan.length})`;
+
+            // Jika dibeli dari keranjang, kosongkan keranjang
+            if (itemCheckoutSementara.length > 1 || (keranjangBelanja.length > 0 && productNameDisplay.textContent.includes('Keranjang'))) {
+                keranjangBelanja = [];
+                cartMenuLink.textContent = `🛒 Keranjang (0)`;
+            }
+
+            checkoutModal.classList.remove('show');
+            
+            // Reset Form
+            document.getElementById('custName').value = '';
+            document.getElementById('custPhone').value = '';
+            document.getElementById('custAddress').value = '';
+
+            showToast(`Pesanan berhasil dibuat! Terima kasih, ${nama}. Pembayaran via ${metode}.`);
+        }
+
+        const filterBtns = document.querySelectorAll('.cat-btn');
+        const productCards = document.querySelectorAll('.product-card');
+        const searchInput = document.getElementById('searchInput');
+
+        function jalankanFilter(filterValue) {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            const tombolYangSesuai = document.querySelector(`.cat-btn[data-filter="${filterValue}"]`);
+            if(tombolYangSesuai) tombolYangSesuai.classList.add('active');
+
+            productCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                if (filterValue === 'all' || category === filterValue) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                jalankanFilter(btn.getAttribute('data-filter'));
+            });
+        });
+
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                jalankanFilter(item.getAttribute('data-filter'));
+                dropdownContent.classList.remove('show');
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const searchText = e.target.value.toLowerCase();
+            productCards.forEach(card => {
+                const title = card.querySelector('.title').textContent.toLowerCase();
+                const desc = card.querySelector('.desc').textContent.toLowerCase();
+
+                if (title.includes(searchText) || desc.includes(searchText)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+
+        function tambahKeKeranjang(namaProduk, hargaProduk, fotoProduk) {
+            keranjangBelanja.push({ nama: namaProduk, harga: hargaProduk, foto: fotoProduk });
+            cartMenuLink.textContent = `🛒 Keranjang (${keranjangBelanja.length})`;
+            showToast(`Sukses! "${namaProduk}" berhasil dimasukkan ke keranjang.`);
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<span>✅</span> ${message}`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
