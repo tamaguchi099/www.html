@@ -85,7 +85,7 @@
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
 
-        /* Desain Baru: Tombol Pilihan Status (Segmented Control) */
+        /* Tombol Pilihan Status (Segmented Control) */
         .status-selector {
             display: flex;
             background-color: #f8fafc;
@@ -107,7 +107,6 @@
             cursor: pointer;
             transition: all 0.25s ease;
         }
-        /* Style Ketika Tombol Dipilih/Aktif */
         .status-option.active {
             background-color: #0f172a;
             color: #ffffff;
@@ -187,21 +186,18 @@
         
         <div class="form-group">
             <label>Status</label>
-            <!-- Tombol Pilihan Status Kustom -->
             <div class="status-selector">
                 <button type="button" class="status-option active" onclick="pilihStatus('Customer')" id="btnCustomer">Customer</button>
                 <button type="button" class="status-option" onclick="pilihStatus('Admin')" id="btnAdmin">Admin</button>
             </div>
-            <!-- Input tersembunyi untuk menyimpan nilai status yang dipilih -->
             <input type="hidden" id="loginStatus" value="Customer">
         </div>
 
         <button class="login-btn" onclick="prosesLogin()">Masuk</button>
     </div>
 
-    <!-- Script JavaScript Login -->
+    <!-- Script JavaScript Login & Pengalihan Halaman -->
     <script>
-        // Fungsi untuk mengatur tombol pilihan status yang aktif
         function pilihStatus(status) {
             document.getElementById('loginStatus').value = status;
             
@@ -222,15 +218,21 @@
             const password = document.getElementById('loginPassword').value.trim();
             const status = document.getElementById('loginStatus').value;
 
+            // Validasi agar username & password tidak kosong (walaupun isinya bebas/asal)
             if (username === "" || password === "") {
                 alert("Username dan Password tidak boleh kosong!");
                 return;
             }
 
-            if (status === "Admin") {
-                showToast(`Login Berhasil! Selamat datang Admin, ${username}.`);
+            // Pengalihan halaman berdasarkan status yang dipilih
+            if (status === "Customer") {
+                showToast(`Login berhasil sebagai Customer. Mengalihkan...`);
+                setTimeout(() => {
+                    window.location.href = "castemer.html"; // Mengarahkan ke file castemer.html
+                }, 1000); // Jeda 1 detik agar toast sempat terlihat
             } else {
-                showToast(`Login Berhasil! Selamat datang Customer, ${username}.`);
+                showToast(`Login Berhasil! Selamat datang Admin, ${username}.`);
+                // Kamu bisa ubah bagian admin ini nanti jika ingin diarahkan ke file admin.html
             }
         }
 
