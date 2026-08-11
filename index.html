@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GadgetStore Management System</title>
+    <title>GadgetStore Pro - Panel Pembeli</title>
     <style>
         * {
             box-sizing: border-box;
@@ -25,9 +25,6 @@
             font-size: 2rem;
         }
         .container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -42,33 +39,6 @@
             color: #34495e;
             border-bottom: 2px solid #eee;
             padding-bottom: 10px;
-        }
-        /* Form Admin Style */
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        button:hover {
-            background-color: #2980b9;
         }
         /* Catalog Grid Style */
         .catalog-grid {
@@ -137,41 +107,40 @@
 <body>
 
     <header>
-        <h1>GadgetStore Management System</h1>[span_1](start_span)[span_1](end_span)
+        <h1>GadgetStore Management System</h1>[span_0](start_span)[span_0](end_span)
     </header>
 
     <div class="container">
-        <!-- Panel Administrator -->
-        <div class="section-box">
-            <h2>Panel Administrator (Manajemen Produk)</h2>[span_2](start_span)[span_2](end_span)
-            <form>
-                <div class="form-group">
-                    <label for="productName">Nama Produk</label>[span_3](start_span)[span_3](end_span)
-                    <input type="text" id="productName" placeholder="Contoh: Smartphone Premium">
-                </div>
-                <div class="form-group">
-                    <label for="productDesc">Deskripsi & Harga Produk</label>[span_4](start_span)[span_4](end_span)
-                    <textarea id="productDesc" rows="4" placeholder="Masukkan spesifikasi dan harga..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="productImage">URL Gambar Produk</label>[span_5](start_span)[span_5](end_span)
-                    <input type="text" id="productImage" placeholder="https://example.com/image.jpg">
-                </div>
-                <button type="submit">Simpan Produk ke Database</button>[span_6](start_span)[span_6](end_span)
-            </form>
-        </div>
-
         <!-- Panel Pembeli -->
         <div class="section-box">
-            <h2>Panel Pembeli (Katalog & Transaksi)</h2>[span_7](start_span)[span_7](end_span)
+            <h2>Panel Pembeli (Katalog & Transaksi)</h2>[span_1](start_span)[span_1](end_span)
             <div class="catalog-grid">
                 
                 <!-- Produk 1 -->
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500" alt="Smartphone Premium">[span_8](start_span)[span_8](end_span)
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500" alt="Smartphone Premium">[span_2](start_span)[span_2](end_span)
                     <div class="product-title">Smartphone X Pro</div>
-                    <div class="product-price">Rp 12.000.000</div>[span_9](start_span)[span_9](end_span)
-                    <div class="product-desc">Layar 120Hz AMOLED, RAM 12GB, Kamera 108MP.</div>[span_10](start_span)[span_10](end_span)
+                    <div class="product-price">Rp 12.000.000</div>[span_3](start_span)[span_3](end_span)
+                    <div class="product-desc">Layar 120Hz AMOLED, RAM 12GB, Kamera 108MP.</div>[span_4](start_span)[span_4](end_span)
+                    
+                    <video controls>[span_5](start_span)[span_5](end_span)
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+
+                    <div>
+                        <span class="status-badge">Status: Pesanan Diproses</span>[span_6](start_span)[span_6](end_span)
+                    </div>
+                    
+                    <a href="#checkout" class="btn-buy">Beli Sekarang</a>[span_7](start_span)[span_7](end_span)
+                </div>
+
+                <!-- Produk 2 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500" alt="Laptop Ultra">[span_8](start_span)[span_8](end_span)
+                    <div class="product-title">Laptop Ultra Book</div>
+                    <div class="product-price">Rp 15.500.000</div>[span_9](start_span)[span_9](end_span)
+                    <div class="product-desc">Processor Core i7, RAM 16GB, SSD 512GB.</div>[span_10](start_span)[span_10](end_span)
                     
                     <video controls>[span_11](start_span)[span_11](end_span)
                         <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
@@ -179,29 +148,10 @@
                     </video>
 
                     <div>
-                        <span class="status-badge">Status: Pesanan Diproses</span>[span_12](start_span)[span_12](end_span)
+                        <span class="status-badge" style="background-color: #e67e22;">Status: Pesanan Belum Dibayar</span>[span_12](start_span)[span_12](end_span)
                     </div>
                     
                     <a href="#checkout" class="btn-buy">Beli Sekarang</a>[span_13](start_span)[span_13](end_span)
-                </div>
-
-                <!-- Produk 2 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500" alt="Laptop Ultra">[span_14](start_span)[span_14](end_span)
-                    <div class="product-title">Laptop Ultra Book</div>
-                    <div class="product-price">Rp 15.500.000</div>[span_15](start_span)[span_15](end_span)
-                    <div class="product-desc">Processor Core i7, RAM 16GB, SSD 512GB.</div>[span_16](start_span)[span_16](end_span)
-                    
-                    <video controls>[span_17](start_span)[span_17](end_span)
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                        Browser Anda tidak mendukung tag video.
-                    </video>
-
-                    <div>
-                        <span class="status-badge" style="background-color: #e67e22;">Status: Pesanan Belum Dibayar</span>[span_18](start_span)[span_18](end_span)
-                    </div>
-                    
-                    <a href="#checkout" class="btn-buy">Beli Sekarang</a>[span_19](start_span)[span_19](end_span)
                 </div>
 
             </div>
