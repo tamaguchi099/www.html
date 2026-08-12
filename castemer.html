@@ -419,10 +419,18 @@
 
     <script>
         function cekDanInisialisasiDataDefault() {
-            const CURRENT_VERSION = "v7.3_with_5_default_products"; 
+            // Versi diubah agar memperbarui cache localStorage ke link video baru
+            const CURRENT_VERSION = "v7.1_update_custom_video_links"; 
             const savedVersion = localStorage.getItem('tokoVersiApp');
 
             if (savedVersion !== CURRENT_VERSION) {
+                localStorage.removeItem('tokoProduk');
+                localStorage.setItem('tokoVersiApp', CURRENT_VERSION);
+            }
+
+            let listProduk = JSON.parse(localStorage.getItem('tokoProduk'));
+            
+            if (!listProduk || listProduk.length === 0) {
                 const produkDefault = [
                     {
                         nama: "iPhone 15 Pro",
@@ -439,34 +447,9 @@
                         deskripsi: "Laptop gaming bertenaga dengan grafis tajam untuk pengalaman maksimal.",
                         foto: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500",
                         video: "https://youtu.be/DSZE5C_I9xE"
-                    },
-                    {
-                        nama: "Samsung Galaxy S24",
-                        harga: "14000000",
-                        kategori: "Smartphone",
-                        deskripsi: "Smartphone dengan layar AMOLED luar biasa dan fitur AI.",
-                        foto: "https://images.unsplash.com/photo-1707343843437-caacff5cfa74?w=500",
-                        video: "https://youtu.be/q-7s8u3KqU0"
-                    },
-                    {
-                        nama: "MacBook Air M2",
-                        harga: "16500000",
-                        kategori: "Laptop",
-                        deskripsi: "Ringan, bertenaga, dan baterai tahan lama untuk produktivitas.",
-                        foto: "https://images.unsplash.com/photo-1661961112951-f2bfd1f253ce?w=500",
-                        video: "https://youtu.be/C-527M6062c"
-                    },
-                    {
-                        nama: "Xiaomi 14",
-                        harga: "11000000",
-                        kategori: "Smartphone",
-                        deskripsi: "Flagship killer dengan kamera Leica yang sangat mumpuni.",
-                        foto: "https://images.unsplash.com/photo-1709848261314-e0e643ed2d83?w=500",
-                        video: "https://youtu.be/F1K4l8L_w0o"
                     }
                 ];
                 localStorage.setItem('tokoProduk', JSON.stringify(produkDefault));
-                localStorage.setItem('tokoVersiApp', CURRENT_VERSION);
             }
         }
 
