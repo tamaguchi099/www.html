@@ -530,12 +530,12 @@
 
     <!-- Script JavaScript -->
     <script>
-        // --- INISIALISASI DATA DEFAULT BARANG & VIDEO AGAR LANGSUNG MUNCUL SAAT DI-RUN ---
+        // --- INISIALISASI DATA DEFAULT BARANG & VIDEO OTOMATIS ---
         function cekDanInisialisasiDataDefault() {
-            let listProduk = JSON.parse(localStorage.getItem('tokoProduk')) || [];
+            let listProduk = JSON.parse(localStorage.getItem('tokoProduk'));
             
-            // Jika penyimpanan lokal masih kosong, isi dengan data default beserta video yang sesuai
-            if (listProduk.length === 0) {
+            // Jika penyimpanan lokal masih kosong, isi otomatis dengan data default & video
+            if (!listProduk || listProduk.length === 0) {
                 const produkDefault = [
                     {
                         nama: "iPhone 15 Pro",
@@ -564,7 +564,7 @@
 
         // --- FUNGSI LOAD PRODUK DARI LOCALSTORAGE (TERHUBUNG KE ADMIN) ---
         document.addEventListener("DOMContentLoaded", () => {
-            cekDanInisialisasiDataDefault(); // Jalankan pengecekan/pengisian otomatis data default
+            cekDanInisialisasiDataDefault(); // Jalankan inisialisasi data otomatis saat pertama kali dibuka
             muatProdukDariAdmin();
         });
 
