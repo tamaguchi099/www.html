@@ -218,21 +218,23 @@
             const password = document.getElementById('loginPassword').value.trim();
             const status = document.getElementById('loginStatus').value;
 
-            // Validasi agar username & password tidak kosong (walaupun isinya bebas/asal)
+            // Validasi agar username & password tidak kosong (meskipun isinya bebas/asal)
             if (username === "" || password === "") {
                 alert("Username dan Password tidak boleh kosong!");
                 return;
             }
 
-            // Pengalihan halaman berdasarkan status yang dipilih
+            // Pengalihan halaman dinamis berdasarkan pilihan status
             if (status === "Customer") {
                 showToast(`Login berhasil sebagai Customer. Mengalihkan...`);
                 setTimeout(() => {
-                    window.location.href = "castemer.html"; // Mengarahkan ke file castemer.html
-                }, 1000); // Jeda 1 detik agar toast sempat terlihat
-            } else {
-                showToast(`Login Berhasil! Selamat datang Admin, ${username}.`);
-                // Kamu bisa ubah bagian admin ini nanti jika ingin diarahkan ke file admin.html
+                    window.location.href = "castemer.html"; // Mengarahkan ke file customer
+                }, 1000);
+            } else if (status === "Admin") {
+                showToast(`Login berhasil sebagai Admin. Mengalihkan...`);
+                setTimeout(() => {
+                    window.location.href = "admin.html"; // Mengarahkan ke file admin dashboard
+                }, 1000);
             }
         }
 
