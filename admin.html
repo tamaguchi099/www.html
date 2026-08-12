@@ -226,6 +226,17 @@
             color: #1e293b;
         }
 
+        /* Badge Status */
+        .badge-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: #fef08a;
+            color: #854d0e;
+        }
+
         /* Form Input Barang */
         .form-grid {
             display: grid;
@@ -349,15 +360,6 @@
         .preview-delete-btn:hover {
             background: #ffe4e6;
         }
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-        .status-dikemas { background: #fef3c7; color: #92400e; }
-        .status-dikirim { background: #e0f2fe; color: #0369a1; }
-        .status-selesai { background: #dcfce7; color: #166534; }
     </style>
 </head>
 <body>
@@ -393,7 +395,7 @@
         <div id="home" class="page-section active">
             <div class="stats-grid">
                 <div class="stat-card"><p>Total Produk</p><h3>Kelola di Input Barang</h3></div>
-                <div class="stat-card"><p>Pesanan Masuk</p><h3 id="statTotalPesanan">0 Pesanan</h3></div>
+                <div class="stat-card"><p>Pesanan Masuk</p><h3>Cek di Menu Data Pesanan</h3></div>
                 <div class="stat-card"><p>Pendapatan Bulan Ini</p><h3>Rp 48.500.000</h3></div>
             </div>
         </div>
@@ -454,18 +456,18 @@
         <!-- 3. DATA PESANAN -->
         <div id="dataPesanan" class="page-section">
             <div class="card-box">
-                <h3>Kelola Pesanan & Pengiriman Pelanggan</h3>
+                <h3>Kelola Pesanan Pelanggan</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>Pelanggan & Kontak</th>
-                            <th>Detail Produk</th>
-                            <th>Alamat & Pembayaran</th>
+                            <th>Pelanggan</th>
+                            <th>Produk</th>
+                            <th>Alamat & Telp</th>
                             <th>Status Pengiriman</th>
                             <th>Ubah Status</th>
                         </tr>
                     </thead>
-                    <tbody id="tabelPesananAdmin">
+                    <tbody id="tabelPesanan">
                         <tr>
                             <td colspan="5" style="text-align: center; color: #64748b; font-style: italic;">Belum ada pesanan masuk.</td>
                         </tr>
@@ -497,13 +499,14 @@
                 'laporanKeuangan': 'Laporan Keuangan Toko' 
             };
             document.getElementById('pageTitle').innerText = titles[tabId];
-            
+
+            // Jika tab data pesanan dibuka, muat datanya
             if(tabId === 'dataPesanan') {
                 muatDataPesanan();
             }
         }
 
-        // Load data saat halaman admin dibuka
+        // Load produk dan pesanan saat halaman admin dibuka
         document.addEventListener("DOMContentLoaded", () => {
             muatProdukAdmin();
             muatDataPesanan();
@@ -566,7 +569,7 @@
                         <img src="${prod.foto}" alt="${prod.nama}" class="preview-img">
                         <h4 class="preview-title">${prod.nama}</h4>
                         <div class="preview-price">${formattedHarga}</div>
-                        <p class="preview-desc">${prod.desc || prod.deskripsi}</p>
+                        <p class="preview-desc">${prod.deskripsi}</p>
                     </div>
                     <div class="preview-actions">
                         <a href="${prod.video}" target="_blank" class="preview-video-btn">▶ Tonton Video Review</a>
@@ -586,45 +589,29 @@
             }
         }
 
+        // Fungsi untuk menampilkan data pesanan yang masuk dari customer
         function muatDataPesanan() {
-            const tbody = document.getElementById('tabelPesananAdmin');
-            let listPesanan = JSON.parse(localStorage.getItem('daftarPesananAdmin')) || [];
+            const tbody = document.getElementById('tabelPesanan');
+            let pesanan = JSON.parse(localStorage.getItem('daftarPesananAdmin')) || [];
             
-            document.getElementById('statTotalPesanan').innerText = `${listPesanan.length} Pesanan`;
-
-            if (listPesanan.length === 0) {
+            if (pesanan.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #64748b; font-style: italic;">Belum ada pesanan masuk.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = "";
-            listPesanan.forEach((pesanan, index) => {
-                let badgeClass = "status-dikemas";
-                if (pesanan.status === "Dikirim") badgeClass = "status-dikirim";
-                if (pesanan.status === "Selesai") badgeClass = "status-selesai";
-
+            pesanan.forEach((p, index) => {
                 tbody.innerHTML += `
                     <tr>
+                        <td><strong>${p.namaCustomer}</strong></td>
+                        <td>${p.namaProduk} (${p.harga})</td>
+                        <td>${p.alamat}<br><small style="color:#64748b;">Telp: ${p.telp}</small></td>
+                        <td><span class="badge-status">${p.status}</span></td>
                         <td>
-                            <strong>${pesanan.namaCustomer}</strong><br>
-                            <span style="color: #64748b; font-size: 0.8rem;">📱 ${pesanan.telp}</span>
-                        </td>
-                        <td>
-                            <strong>${pesanan.namaProduk}</strong><br>
-                            <span style="color: #2563eb; font-weight: 600; font-size: 0.85rem;">${pesanan.harga}</span>
-                        </td>
-                        <td>
-                            <span style="font-size: 0.85rem; color: #475569;">${pesanan.alamat}</span><br>
-                            <span style="font-size: 0.75rem; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-weight: 600;">${pesanan.metodeBayar || 'Transfer Bank'}</span>
-                        </td>
-                        <td>
-                            <span class="status-badge ${badgeClass}" id="badge-${index}">${pesanan.status}</span>
-                        </td>
-                        <td>
-                            <select onchange="ubahStatusPesanan(${index}, this.value)" style="padding: 6px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; outline: none;">
-                                <option value="Dikemas" ${pesanan.status === 'Dikemas' ? 'selected' : ''}>Dikemas</option>
-                                <option value="Dikirim" ${pesanan.status === 'Dikirim' ? 'selected' : ''}>Dikirim</option>
-                                <option value="Selesai" ${pesanan.status === 'Selesai' ? 'selected' : ''}>Selesai</option>
+                            <select onchange="updateStatus(${index}, this.value)" style="padding: 6px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                                <option value="Dikemas" ${p.status=='Dikemas'?'selected':''}>Dikemas</option>
+                                <option value="Dikirim" ${p.status=='Dikirim'?'selected':''}>Dikirim</option>
+                                <option value="Selesai" ${p.status=='Selesai'?'selected':''}>Selesai</option>
                             </select>
                         </td>
                     </tr>
@@ -632,13 +619,12 @@
             });
         }
 
-        function ubahStatusPesanan(index, statusBaru) {
-            let listPesanan = JSON.parse(localStorage.getItem('daftarPesananAdmin')) || [];
-            if (listPesanan[index]) {
-                listPesanan[index].status = statusBaru;
-                localStorage.setItem('daftarPesananAdmin', JSON.stringify(listPesanan));
-                muatDataPesanan();
-            }
+        // Fungsi untuk mengubah status pesanan (Dikemas -> Dikirim -> Selesai)
+        function updateStatus(index, newStatus) {
+            let pesanan = JSON.parse(localStorage.getItem('daftarPesananAdmin')) || [];
+            pesanan[index].status = newStatus;
+            localStorage.setItem('daftarPesananAdmin', JSON.stringify(pesanan));
+            muatDataPesanan();
         }
 
         function logout() {
