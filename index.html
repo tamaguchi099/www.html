@@ -196,7 +196,7 @@
         <button class="login-btn" onclick="prosesLogin()">Masuk</button>
     </div>
 
-    <!-- Script JavaScript Login & Pengalihan Halaman GitHub -->
+    <!-- Script JavaScript Login & Pengalihan Halaman -->
     <script>
         function pilihStatus(status) {
             document.getElementById('loginStatus').value = status;
@@ -218,13 +218,13 @@
             const password = document.getElementById('loginPassword').value.trim();
             const status = document.getElementById('loginStatus').value;
 
-            // Validasi input kosong (bebas/asal tetap lolos asal terisi)
+            // Validasi input agar tidak kosong (bebas/asal tetap bisa masuk)
             if (username === "" || password === "") {
                 alert("Username dan Password tidak boleh kosong!");
                 return;
             }
 
-            // Pengalihan halaman khusus untuk GitHub Pages
+            // Pengalihan halaman yang menghubungkan ke castemer.html dan admin.html
             if (status === "Customer") {
                 showToast(`Login berhasil sebagai Customer. Mengalihkan...`);
                 setTimeout(() => {
