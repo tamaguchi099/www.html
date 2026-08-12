@@ -41,7 +41,7 @@
             align-items: center;
         }
         .nav-link {
-            text-decoration: none:
+            text-decoration: none;
             color: #475569;
             font-weight: 600;
             font-size: 0.95rem;
@@ -530,12 +530,41 @@
 
     <!-- Script JavaScript -->
     <script>
+        // --- INISIALISASI DATA DEFAULT BARANG & VIDEO AGAR LANGSUNG MUNCUL SAAT DI-RUN ---
+        function cekDanInisialisasiDataDefault() {
+            let listProduk = JSON.parse(localStorage.getItem('tokoProduk')) || [];
+            
+            // Jika penyimpanan lokal masih kosong, isi dengan data default beserta video yang sesuai
+            if (listProduk.length === 0) {
+                const produkDefault = [
+                    {
+                        nama: "iPhone 15 Pro",
+                        harga: "18500000",
+                        kategori: "Smartphone",
+                        deskripsi: "Smartphone flagship dengan performa tinggi dan kamera profesional.",
+                        foto: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500",
+                        video: "https://www.youtube.com/watch?v=Zi_AA3_l4G8"
+                    },
+                    {
+                        nama: "Laptop ASUS ROG",
+                        harga: "22000000",
+                        kategori: "Laptop",
+                        deskripsi: "Laptop gaming bertenaga dengan grafis tajam untuk pengalaman maksimal.",
+                        foto: "https://images.unsplash.com/photo-1593642634367-d95a832e8e0c?w=500",
+                        video: "https://www.youtube.com/watch?v=q626o238t9Q"
+                    }
+                ];
+                localStorage.setItem('tokoProduk', JSON.stringify(produkDefault));
+            }
+        }
+
         // Array untuk menyimpan data keranjang dan pesanan
         let keranjangBelanja = [];
         let daftarPesanan = [];
 
-        // --- FUNGSI LOAD PRODUK DARI ADMIN (LOCALSTORAGE) ---
+        // --- FUNGSI LOAD PRODUK DARI LOCALSTORAGE (TERHUBUNG KE ADMIN) ---
         document.addEventListener("DOMContentLoaded", () => {
+            cekDanInisialisasiDataDefault(); // Jalankan pengecekan/pengisian otomatis data default
             muatProdukDariAdmin();
         });
 
@@ -555,9 +584,9 @@
                 
                 // Ubah link standar YouTube menjadi embed link agar bisa diputar di iframe
                 let embedVideoUrl = prod.video;
-                if (prod.video.includes("watch?v=")) {
+                if (prod.video && prod.video.includes("watch?v=")) {
                     embedVideoUrl = prod.video.replace("watch?v=", "embed/");
-                } else if (prod.video.includes("youtu.be/")) {
+                } else if (prod.video && prod.video.includes("youtu.be/")) {
                     embedVideoUrl = prod.video.replace("youtu.be/", "www.youtube.com/embed/");
                 }
 
@@ -567,7 +596,7 @@
                 card.innerHTML = `
                     <div>
                         <img src="${prod.foto}" class="product-img" alt="${prod.nama}">
-                        <span class="badge badge-pending">Belum Dibayar</span>
+                        <span class="badge badge-pending">Ready Stock</span>
                         <div class="title">${prod.nama}</div>
                         <div class="price">${formattedHarga}</div>
                         <div class="desc">${prod.deskripsi}</div>
