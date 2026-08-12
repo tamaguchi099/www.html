@@ -419,7 +419,8 @@
 
     <script>
         function cekDanInisialisasiDataDefault() {
-            const CURRENT_VERSION = "v5.0_fix_final_video"; 
+            // Versi diubah ke v6.0 agar data terupdate ke link video yang baru
+            const CURRENT_VERSION = "v6.0_fix_video_aktif"; 
             const savedVersion = localStorage.getItem('tokoVersiApp');
 
             if (savedVersion !== CURRENT_VERSION) {
@@ -437,7 +438,7 @@
                         kategori: "Smartphone",
                         deskripsi: "Smartphone flagship dengan performa tinggi dan kamera profesional.",
                         foto: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500",
-                        video: "https://www.youtube.com/embed/82gXbr3C6-s"
+                        video: "https://www.youtube.com/embed/Zi_XLOBDo_Y"
                     },
                     {
                         nama: "Laptop ASUS ROG",
@@ -445,7 +446,7 @@
                         kategori: "Laptop",
                         deskripsi: "Laptop gaming bertenaga dengan grafis tajam untuk pengalaman maksimal.",
                         foto: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500",
-                        video: "https://www.youtube.com/embed/6v7bcfv_d3s"
+                        video: "https://www.youtube.com/embed/kJQP7kiw5Fk"
                     }
                 ];
                 localStorage.setItem('tokoProduk', JSON.stringify(produkDefault));
