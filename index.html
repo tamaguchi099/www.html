@@ -196,7 +196,7 @@
         <button class="login-btn" onclick="prosesLogin()">Masuk</button>
     </div>
 
-    <!-- Script JavaScript Login & Pengalihan Halaman -->
+    <!-- Script JavaScript Login & Pengalihan Halaman GitHub -->
     <script>
         function pilihStatus(status) {
             document.getElementById('loginStatus').value = status;
@@ -218,22 +218,22 @@
             const password = document.getElementById('loginPassword').value.trim();
             const status = document.getElementById('loginStatus').value;
 
-            // Validasi agar username & password tidak kosong
+            // Validasi input kosong (bebas/asal tetap lolos asal terisi)
             if (username === "" || password === "") {
                 alert("Username dan Password tidak boleh kosong!");
                 return;
             }
 
-            // Pengalihan halaman menggunakan jalur relatif (./) agar terbaca di penyimpanan lokal HP
+            // Pengalihan halaman khusus untuk GitHub Pages
             if (status === "Customer") {
                 showToast(`Login berhasil sebagai Customer. Mengalihkan...`);
                 setTimeout(() => {
-                    window.location.href = "./castemer.html"; 
+                    window.location.href = "castemer.html"; 
                 }, 1000);
             } else if (status === "Admin") {
                 showToast(`Login berhasil sebagai Admin. Mengalihkan...`);
                 setTimeout(() => {
-                    window.location.href = "./admin.html"; 
+                    window.location.href = "admin.html"; 
                 }, 1000);
             }
         }
@@ -241,7 +241,6 @@
         function showToast(message) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            toast.className, 'toast';
             toast.className = 'toast';
             toast.innerHTML = `<span>✅</span> ${message}`;
             container.appendChild(toast);
