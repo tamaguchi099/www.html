@@ -260,13 +260,18 @@
             color: #1e293b;
             transition: all 0.2s ease;
         }
+        .form-group input[type="file"] {
+            padding: 9px;
+            background: #ffffff;
+            cursor: pointer;
+        }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: #3b82f6;
             background-color: #ffffff;
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
         .btn-submit {
-            background: #fbbf24; /* Aksen kuning hangat khas tema toko */
+            background: #fbbf24;
             color: #0f172a;
             padding: 12px 24px;
             border-radius: 12px;
@@ -391,19 +396,19 @@
             </div>
         </div>
 
-        <!-- 2. HALAMAN INPUT BARANG -->
+        <!-- 2. HALAMAN INPUT BARANG (Disesuaikan dengan upload foto & link video YouTube) -->
         <div id="inputBarang" class="page-section">
             <div class="card-box">
-                <h3>Formulir Tambah Produk Baru</h3>
+                <h3>Formulir Tambah Produk Baru (Foto & Video Review)</h3>
                 <form onsubmit="simpanBarang(event)">
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Nama Gadget / Barang</label>
-                            <input type="text" placeholder="Contoh: Samsung Galaxy S24" required>
+                            <input type="text" id="inputNama" placeholder="Contoh: MacBook Air M2" required>
                         </div>
                         <div class="form-group">
                             <label>Kategori</label>
-                            <select required>
+                            <select id="inputKategori" required>
                                 <option value="">Pilih Kategori</option>
                                 <option value="Smartphone">Smartphone</option>
                                 <option value="Laptop">Laptop</option>
@@ -414,15 +419,25 @@
                         </div>
                         <div class="form-group">
                             <label>Harga (Rp)</label>
-                            <input type="number" placeholder="Contoh: 12000000" required>
+                            <input type="number" id="inputHarga" placeholder="Contoh: 16500000" required>
                         </div>
                         <div class="form-group">
                             <label>Stok Barang</label>
-                            <input type="number" placeholder="Contoh: 15" required>
+                            <input type="number" id="inputStok" placeholder="Contoh: 10" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Foto Produk</label>
+                            <input type="file" id="inputFoto" accept="image/*" required>
+                            <small style="color: #64748b; font-size: 0.75rem; margin-top: 4px; display: block;">Pilih foto produk dari perangkat Anda.</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Link Video YouTube (Review Produk)</label>
+                            <input type="url" id="inputVideo" placeholder="Contoh: https://www.youtube.com/watch?v=..." required>
+                            <small style="color: #64748b; font-size: 0.75rem; margin-top: 4px; display: block;">Masukkan tautan link video YouTube.</small>
                         </div>
                         <div class="form-group full">
                             <label>Deskripsi Produk</label>
-                            <textarea rows="4" placeholder="Tuliskan spesifikasi atau keterangan produk..."></textarea>
+                            <textarea id="inputDeskripsi" rows="4" placeholder="Tuliskan spesifikasi atau keterangan produk..." required></textarea>
                         </div>
                     </div>
                     <button type="submit" class="btn-submit">Simpan Produk</button>
@@ -536,20 +551,16 @@
     <script>
         // Fungsi Berpindah Menu Utama (Sidebar)
         function switchTab(tabId, element) {
-            // Sembunyikan semua section
             document.querySelectorAll('.page-section').forEach(sec => {
                 sec.classList.remove('active');
             });
-            // Tampilkan section yang dipilih
             document.getElementById(tabId).classList.add('active');
 
-            // Ubah status aktif pada tombol sidebar
             document.querySelectorAll('.sidebar-menu button').forEach(btn => {
                 btn.classList.remove('active');
             });
             element.classList.add('active');
 
-            // Ganti Judul Top Bar sesuai menu
             const titles = {
                 'home': 'Beranda Admin',
                 'inputBarang': 'Input Barang Baru',
@@ -558,7 +569,7 @@
             document.getElementById('pageTitle').innerText = titles[tabId];
         }
 
-        // Fungsi Berpindah Sub-Menu Laporan Keuangan (Harian, Bulanan, Tahunan)
+        // Fungsi Berpindah Sub-Menu Laporan Keuangan
         function switchReport(type, element) {
             document.querySelectorAll('.report-content').forEach(rep => {
                 rep.style.display = 'none';
@@ -571,10 +582,20 @@
             element.classList.add('active');
         }
 
-        // Fungsi Notifikasi Input Barang Berhasil
+        // Fungsi Simpan Barang dengan Data Upload Foto & Link YouTube
         function simpanBarang(event) {
             event.preventDefault();
-            alert("Produk baru berhasil ditambahkan ke sistem toko!");
+            
+            const nama = document.getElementById('inputNama').value;
+            const kategori = document.getElementById('inputKategori').value;
+            const harga = document.getElementById('inputHarga').value;
+            const stok = document.getElementById('inputStok').value;
+            const deskripsi = document.getElementById('inputDeskripsi').value;
+            const videoYoutube = document.getElementById('inputVideo').value;
+            const fotoInput = document.getElementById('inputFoto').files[0];
+
+            // Simulasi penyimpanan data produk baru berhasil
+            alert(`Produk "${nama}" berhasil disimpan lengkap dengan foto dan link video YouTube!`);
             event.target.reset();
         }
 
