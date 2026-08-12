@@ -193,7 +193,6 @@
             color: #0f172a;
         }
 
-        /* Tabel Produk & Laporan */
         .card-box {
             background: #ffffff;
             border-radius: 16px;
@@ -226,11 +225,8 @@
             border-bottom: 1px solid #f1f5f9;
             color: #1e293b;
         }
-        tr:last-child td {
-            border-bottom: none;
-        }
 
-        /* Form Input Barang & Filter Laporan */
+        /* Form Input Barang */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -258,17 +254,11 @@
             outline: none;
             background-color: #f8fafc;
             color: #1e293b;
-            transition: all 0.2s ease;
         }
         .form-group input[type="file"] {
             padding: 9px;
             background: #ffffff;
             cursor: pointer;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: #3b82f6;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
         .btn-submit {
             background: #fbbf24;
@@ -284,33 +274,85 @@
             background: #f59e0b;
         }
 
-        /* Tombol Sub-Menu Laporan Keuangan */
-        .report-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+        /* Grid Kelola Produk Admin */
+        .product-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
-        .report-tab-btn {
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: 1px solid #cbd5e1;
+        .product-preview-card {
             background: #ffffff;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            color: #64748b;
-            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .report-tab-btn.active {
-            background: #0f172a;
+        .preview-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            background: #e2e8f0;
+        }
+        .preview-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .preview-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+        .preview-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .preview-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto;
+        }
+        .preview-video-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #ef4444;
             color: #ffffff;
-            border-color: #0f172a;
+            padding: 9px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .preview-delete-btn {
+            background: #fff1f2;
+            color: #e11d48;
+            border: 1px solid #fecdd3;
+            padding: 9px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .preview-delete-btn:hover {
+            background: #ffe4e6;
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Menu Samping -->
     <sidebar>
         <div>
             <div class="sidebar-brand">
@@ -328,7 +370,6 @@
         </div>
     </sidebar>
 
-    <!-- Konten Utama Dashboard -->
     <div class="main-content">
         <div class="top-bar">
             <h1 id="pageTitle">Beranda Admin</h1>
@@ -338,68 +379,19 @@
             </div>
         </div>
 
-        <!-- 1. HALAMAN HOME -->
+        <!-- 1. HOME -->
         <div id="home" class="page-section active">
             <div class="stats-grid">
-                <div class="stat-card">
-                    <p>Total Produk</p>
-                    <h3>7 Produk</h3>
-                </div>
-                <div class="stat-card">
-                    <p>Pesanan Masuk</p>
-                    <h3>12 Pesanan</h3>
-                </div>
-                <div class="stat-card">
-                    <p>Pendapatan Bulan Ini</p>
-                    <h3>Rp 48.500.000</h3>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <h3>Daftar Produk Toko Terbaru</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama Gadget</th>
-                            <th>Kategori</th>
-                            <th>Harga</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>iPhone 13</td>
-                            <td>Smartphone</td>
-                            <td>Rp 11.999.000</td>
-                            <td><span style="color: #10b981; font-weight: 600;">Tersedia</span></td>
-                        </tr>
-                        <tr>
-                            <td>MacBook Air M2</td>
-                            <td>Laptop</td>
-                            <td>Rp 16.500.000</td>
-                            <td><span style="color: #10b981; font-weight: 600;">Tersedia</span></td>
-                        </tr>
-                        <tr>
-                            <td>Headset Gaming RGB</td>
-                            <td>Audio</td>
-                            <td>Rp 850.000</td>
-                            <td><span style="color: #10b981; font-weight: 600;">Tersedia</span></td>
-                        </tr>
-                        <tr>
-                            <td>Smart Watch</td>
-                            <td>Wearable</td>
-                            <td>Rp 4.500.000</td>
-                            <td><span style="color: #10b981; font-weight: 600;">Tersedia</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="stat-card"><p>Total Produk</p><h3>Kelola di Input Barang</h3></div>
+                <div class="stat-card"><p>Pesanan Masuk</p><h3>12 Pesanan</h3></div>
+                <div class="stat-card"><p>Pendapatan Bulan Ini</p><h3>Rp 48.500.000</h3></div>
             </div>
         </div>
 
-        <!-- 2. HALAMAN INPUT BARANG (Disesuaikan dengan upload foto & link video YouTube) -->
+        <!-- 2. INPUT & KELOLA BARANG -->
         <div id="inputBarang" class="page-section">
             <div class="card-box">
-                <h3>Formulir Tambah Produk Baru (Foto & Video Review)</h3>
+                <h3>Formulir Tambah Produk Baru</h3>
                 <form onsubmit="simpanBarang(event)">
                     <div class="form-grid">
                         <div class="form-group">
@@ -414,7 +406,6 @@
                                 <option value="Laptop">Laptop</option>
                                 <option value="Audio">Audio</option>
                                 <option value="Wearable">Wearable</option>
-                                <option value="Kamera">Kamera</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -428,184 +419,133 @@
                         <div class="form-group">
                             <label>Upload Foto Produk</label>
                             <input type="file" id="inputFoto" accept="image/*" required>
-                            <small style="color: #64748b; font-size: 0.75rem; margin-top: 4px; display: block;">Pilih foto produk dari perangkat Anda.</small>
                         </div>
                         <div class="form-group">
-                            <label>Link Video YouTube (Review Produk)</label>
+                            <label>Link Video YouTube (Review)</label>
                             <input type="url" id="inputVideo" placeholder="Contoh: https://www.youtube.com/watch?v=..." required>
-                            <small style="color: #64748b; font-size: 0.75rem; margin-top: 4px; display: block;">Masukkan tautan link video YouTube.</small>
                         </div>
                         <div class="form-group full">
                             <label>Deskripsi Produk</label>
-                            <textarea id="inputDeskripsi" rows="4" placeholder="Tuliskan spesifikasi atau keterangan produk..." required></textarea>
+                            <textarea id="inputDeskripsi" rows="4" placeholder="Tuliskan spesifikasi produk..." required></textarea>
                         </div>
                     </div>
                     <button type="submit" class="btn-submit">Simpan Produk</button>
                 </form>
             </div>
+
+            <div class="card-box">
+                <h3>Daftar Produk Toko</h3>
+                <div id="daftarProdukAdmin" class="product-preview-grid">
+                    <p style="color: #64748b; font-style: italic;" id="emptyText">Belum ada produk yang ditambahkan.</p>
+                </div>
+            </div>
         </div>
 
-        <!-- 3. HALAMAN LAPORAN KEUANGAN -->
+        <!-- 3. LAPORAN KEUANGAN -->
         <div id="laporanKeuangan" class="page-section">
-            <div class="report-tabs">
-                <button class="report-tab-btn active" onclick="switchReport('harian', this)">Harian</button>
-                <button class="report-tab-btn" onclick="switchReport('bulanan', this)">Bulanan</button>
-                <button class="report-tab-btn" onclick="switchReport('tahunan', this)">Tahunan</button>
-            </div>
-
-            <!-- Laporan Harian -->
-            <div id="report-harian" class="report-content card-box">
-                <h3>Laporan Keuangan Harian (Hari Ini)</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Waktu</th>
-                            <th>Keterangan Transaksi</th>
-                            <th>Jumlah Terjual</th>
-                            <th>Total Pendapatan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>10:15 WIB</td>
-                            <td>Penjualan iPhone 13</td>
-                            <td>1 Unit</td>
-                            <td>Rp 11.999.000</td>
-                        </tr>
-                        <tr>
-                            <td>13:40 WIB</td>
-                            <td>Penjualan Headset Gaming RGB</td>
-                            <td>2 Unit</td>
-                            <td>Rp 1.700.000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Laporan Bulanan -->
-            <div id="report-bulanan" class="report-content card-box" style="display: none;">
-                <h3>Laporan Keuangan Bulanan (Bulan Ini)</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Minggu Ke-</th>
-                            <th>Total Transaksi Sukses</th>
-                            <th>Pemasukan Kotor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Minggu ke-1</td>
-                            <td>18 Transaksi</td>
-                            <td>Rp 14.500.000</td>
-                        </tr>
-                        <tr>
-                            <td>Minggu ke-2</td>
-                            <td>24 Transaksi</td>
-                            <td>Rp 19.200.000</td>
-                        </tr>
-                        <tr>
-                            <td>Minggu ke-3</td>
-                            <td>15 Transaksi</td>
-                            <td>Rp 14.800.000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Laporan Tahunan -->
-            <div id="report-tahunan" class="report-content card-box" style="display: none;">
-                <h3>Laporan Keuangan Tahunan</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bulan</th>
-                            <th>Total Unit Terjual</th>
-                            <th>Total Pendapatan Bersih</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Januari 2026</td>
-                            <td>120 Unit</td>
-                            <td>Rp 180.500.000</td>
-                        </tr>
-                        <tr>
-                            <td>Februari 2026</td>
-                            <td>98 Unit</td>
-                            <td>Rp 145.200.000</td>
-                        </tr>
-                        <tr>
-                            <td>Maret 2026</td>
-                            <td>142 Unit</td>
-                            <td>Rp 210.000.000</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="card-box">
+                <h3>Laporan Keuangan Toko</h3>
+                <p>Data keuangan aman dan terenkripsi.</p>
             </div>
         </div>
-
     </div>
 
-    <!-- Script JavaScript Navigasi & Logika -->
     <script>
-        // Fungsi Berpindah Menu Utama (Sidebar)
         function switchTab(tabId, element) {
-            document.querySelectorAll('.page-section').forEach(sec => {
-                sec.classList.remove('active');
-            });
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-
-            document.querySelectorAll('.sidebar-menu button').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.sidebar-menu button').forEach(btn => btn.classList.remove('active'));
             element.classList.add('active');
-
-            const titles = {
-                'home': 'Beranda Admin',
-                'inputBarang': 'Input Barang Baru',
-                'laporanKeuangan': 'Laporan Keuangan Toko'
-            };
+            const titles = { 'home': 'Beranda Admin', 'inputBarang': 'Input Barang Baru', 'laporanKeuangan': 'Laporan Keuangan Toko' };
             document.getElementById('pageTitle').innerText = titles[tabId];
         }
 
-        // Fungsi Berpindah Sub-Menu Laporan Keuangan
-        function switchReport(type, element) {
-            document.querySelectorAll('.report-content').forEach(rep => {
-                rep.style.display = 'none';
-            });
-            document.getElementById('report-' + type).style.display = 'block';
+        // Load produk saat halaman admin dibuka
+        document.addEventListener("DOMContentLoaded", muatProdukAdmin);
 
-            document.querySelectorAll('.report-tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            element.classList.add('active');
-        }
-
-        // Fungsi Simpan Barang dengan Data Upload Foto & Link YouTube
         function simpanBarang(event) {
             event.preventDefault();
             
             const nama = document.getElementById('inputNama').value;
             const kategori = document.getElementById('inputKategori').value;
             const harga = document.getElementById('inputHarga').value;
-            const stok = document.getElementById('inputStok').value;
             const deskripsi = document.getElementById('inputDeskripsi').value;
             const videoYoutube = document.getElementById('inputVideo').value;
             const fotoInput = document.getElementById('inputFoto').files[0];
 
-            // Simulasi penyimpanan data produk baru berhasil
-            alert(`Produk "${nama}" berhasil disimpan lengkap dengan foto dan link video YouTube!`);
-            event.target.reset();
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageUrl = e.target.result;
+                
+                const produkBaru = {
+                    id: Date.now(), // ID Unik berdasarkan waktu
+                    nama,
+                    kategori,
+                    harga,
+                    deskripsi,
+                    video: videoYoutube,
+                    foto: imageUrl
+                };
+
+                // Ambil data lama dari localStorage atau buat array baru
+                let listProduk = JSON.parse(localStorage.getItem('tokoProduk')) || [];
+                listProduk.push(produkBaru);
+                localStorage.setItem('tokoProduk', JSON.stringify(listProduk));
+
+                alert(`Produk "${nama}" berhasil disimpan dan otomatis muncul di halaman customer!`);
+                event.target.reset();
+                muatProdukAdmin();
+            };
+
+            if (fotoInput) {
+                reader.readAsDataURL(fotoInput);
+            }
         }
 
-        // Fungsi Logout Kembali ke Halaman Login (index.html)
+        function muatProdukAdmin() {
+            const container = document.getElementById('daftarProdukAdmin');
+            let listProduk = JSON.parse(localStorage.getItem('tokoProduk')) || [];
+
+            if (listProduk.length === 0) {
+                container.innerHTML = `<p style="color: #64748b; font-style: italic;" id="emptyText">Belum ada produk yang ditambahkan.</p>`;
+                return;
+            }
+
+            container.innerHTML = "";
+            listProduk.forEach(prod => {
+                const formattedHarga = "Rp " + Number(prod.harga).toLocaleString('id-ID');
+                const card = document.createElement('div');
+                card.className = 'product-preview-card';
+                card.innerHTML = `
+                    <div>
+                        <img src="${prod.foto}" alt="${prod.nama}" class="preview-img">
+                        <h4 class="preview-title">${prod.nama}</h4>
+                        <div class="preview-price">${formattedHarga}</div>
+                        <p class="preview-desc">${prod.deskripsi}</p>
+                    </div>
+                    <div class="preview-actions">
+                        <a href="${prod.video}" target="_blank" class="preview-video-btn">▶ Tonton Video Review</a>
+                        <button type="button" class="preview-delete-btn" onclick="hapusProduk(${prod.id})">🗑 Hapus Produk</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function hapusProduk(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus produk ini? Produk juga akan hilang dari halaman customer.")) {
+                let listProduk = JSON.parse(localStorage.getItem('tokoProduk')) || [];
+                listProduk = listProduk.filter(prod => prod.id !== id);
+                localStorage.setItem('tokoProduk', JSON.stringify(listProduk));
+                muatProdukAdmin();
+            }
+        }
+
         function logout() {
-            if (confirm("Apakah Anda yakin ingin keluar dari akun Admin?")) {
+            if (confirm("Keluar dari akun Admin?")) {
                 window.location.href = "index.html";
             }
         }
     </script>
-
 </body>
 </html>
