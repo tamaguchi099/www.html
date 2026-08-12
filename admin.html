@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GadgetStore Pro - Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #1e293b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .login-card {
+            background: #ffffff;
+            padding: 40px 35px;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 420px;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-logo {
+            width: 54px;
+            height: 54px;
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+        .login-header h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+        .login-header p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #334155;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            outline: none;
+            background-color: #f8fafc;
+            color: #1e293b;
+            transition: all 0.2s ease;
+        }
+        .form-group input:focus {
+            border-color: #3b82f6;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Tombol Pilihan Status (Segmented Control) */
+        .status-selector {
+            display: flex;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 4px;
+            gap: 4px;
+        }
+        .status-option {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #64748b;
+            background: transparent;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .status-option.active {
+            background-color: #0f172a;
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+        }
+
+        .login-btn {
+            display: block;
+            width: 100%;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 25px;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+        .login-btn:hover {
+            background: #334155;
+        }
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Toast Notification */
+        #toastContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        .toast {
+            background: #0f172a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Toast Notification -->
+    <div id="toastContainer"></div>
+
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-logo">GS</div>
+            <h2>GadgetStore Pro</h2>
+            <p>Silakan masuk ke akun Anda</p>
+        </div>
+        
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="loginUsername" placeholder="Masukkan username...">
+        </div>
+        
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" placeholder="Masukkan password...">
+        </div>
+        
+        <div class="form-group">
+            <label>Status</label>
+            <div class="status-selector">
+                <button type="button" class="status-option active" onclick="pilihStatus('Customer')" id="btnCustomer">Customer</button>
+                <button type="button" class="status-option" onclick="pilihStatus('Admin')" id="btnAdmin">Admin</button>
+            </div>
+            <input type="hidden" id="loginStatus" value="Customer">
+        </div>
+
+        <button class="login-btn" onclick="prosesLogin()">Masuk</button>
+    </div>
+
+    <!-- Script JavaScript Login & Pengalihan Halaman -->
+    <script>
+        function pilihStatus(status) {
+            document.getElementById('loginStatus').value = status;
+            
+            const btnCustomer = document.getElementById('btnCustomer');
+            const btnAdmin = document.getElementById('btnAdmin');
+
+            if (status === 'Customer') {
+                btnCustomer.classList.add('active');
+                btnAdmin.classList.remove('active');
+            } else {
+                btnAdmin.classList.add('active');
+                btnCustomer.classList.remove('active');
+            }
+        }
+
+        function prosesLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const status = document.getElementById('loginStatus').value;
+
+            // Validasi agar username & password tidak kosong (walaupun isinya bebas/asal)
+            if (username === "" || password === "") {
+                alert("Username dan Password tidak boleh kosong!");
+                return;
+            }
+
+            // Pengalihan halaman berdasarkan status yang dipilih
+            if (status === "Customer") {
+                showToast(`Login berhasil sebagai Customer. Mengalihkan...`);
+                setTimeout(() => {
+                    window.location.href = "castemer.html"; // Mengarahkan ke file castemer.html
+                }, 1000); // Jeda 1 detik agar toast sempat terlihat
+            } else {
+                showToast(`Login Berhasil! Selamat datang Admin, ${username}.`);
+                // Kamu bisa ubah bagian admin ini nanti jika ingin diarahkan ke file admin.html
+            }
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<span>✅</span> ${message}`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
