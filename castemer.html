@@ -256,7 +256,6 @@
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-        /* ----------------------------------- */
 
         .nav-logout {
             background: #fee2e2;
@@ -361,8 +360,6 @@
         }
         .badge-process { background: #dcfce7; color: #166534; }
         .badge-pending { background: #fee2e2; color: #991b1b; }
-        .badge-sent { background: #e0f2fe; color: #0369a1; }
-        .badge-done { background: #f1f5f9; color: #475569; }
         
         .title { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
         .price { font-size: 1.15rem; font-weight: 700; color: #3b82f6; margin-bottom: 10px; }
@@ -433,11 +430,11 @@
                 <a class="nav-link" id="kategoriDropdownBtn">Kategori ▼</a>
                 <div class="dropdown-content" id="kategoriDropdown">
                     <a href="#" class="dropdown-item" data-filter="all">Semua Produk</a>
-                    <a href="#" class="dropdown-item" data-filter="smartphone">📱 Smartphone</a>
-                    <a href="#" class="dropdown-item" data-filter="laptop">💻 Laptop</a>
-                    <a href="#" class="dropdown-item" data-filter="audio">🎧 Audio</a>
-                    <a href="#" class="dropdown-item" data-filter="wearable">⌚ Wearable</a>
-                    <a href="#" class="dropdown-item" data-filter="kamera">📷 Kamera</a>
+                    <a href="#" class="dropdown-item" data-filter="Smartphone">📱 Smartphone</a>
+                    <a href="#" class="dropdown-item" data-filter="Laptop">💻 Laptop</a>
+                    <a href="#" class="dropdown-item" data-filter="Audio">🎧 Audio</a>
+                    <a href="#" class="dropdown-item" data-filter="Wearable">⌚ Wearable</a>
+                    <a href="#" class="dropdown-item" data-filter="Kamera">📷 Kamera</a>
                 </div>
             </div>
 
@@ -515,132 +512,20 @@
     <div class="action-bar">
         <div class="category-filters">
             <button class="cat-btn active" data-filter="all">Semua</button>
-            <button class="cat-btn" data-filter="smartphone">Smartphone</button>
-            <button class="cat-btn" data-filter="laptop">Laptop</button>
-            <button class="cat-btn" data-filter="audio">Audio</button>
-            <button class="cat-btn" data-filter="wearable">Wearable</button>
-            <button class="cat-btn" data-filter="kamera">Kamera</button>
+            <button class="cat-btn" data-filter="Smartphone">Smartphone</button>
+            <button class="cat-btn" data-filter="Laptop">Laptop</button>
+            <button class="cat-btn" data-filter="Audio">Audio</button>
+            <button class="cat-btn" data-filter="Wearable">Wearable</button>
+            <button class="cat-btn" data-filter="Kamera">Kamera</button>
         </div>
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Cari gadget impianmu...">
         </div>
     </div>
 
-    <!-- Katalog Produk -->
+    <!-- Katalog Produk (Otomatis dari Admin via localStorage) -->
     <div class="catalog-container" id="catalogContainer">
-        
-        <!-- Produk 1: iPhone 13 -->
-        <div class="product-card" data-category="smartphone">
-            <div>
-                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800" class="product-img">
-                <span class="badge badge-process">Pesanan Diproses</span>
-                <div class="title">iPhone 13</div>
-                <div class="price">Rp 11.999.000</div>
-                <div class="desc">Chip A15 Bionic, sistem kamera ganda canggih, dan daya tahan baterai luar biasa.</div>
-                <iframe src="https://www.youtube.com/embed/Fa2EaYPn4N0" allowfullscreen></iframe>
-            </div>
-            <div class="action-buttons">
-                <button class="cart-btn" onclick="tambahKeKeranjang('iPhone 13', 'Rp 11.999.000', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800')">+ Keranjang</button>
-                <button class="buy-btn" onclick="bukaCheckout('iPhone 13', 'Rp 11.999.000', 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800')">Beli Sekarang</button>
-            </div>
-        </div>
-        
-        <!-- Produk 2: MacBook -->
-        <div class="product-card" data-category="laptop">
-            <div>
-                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800" class="product-img">
-                <span class="badge badge-pending">Belum Dibayar</span>
-                <div class="title">MacBook</div>
-                <div class="price">Rp 16.500.000</div>
-                <div class="desc">Ditenagai Apple Silicon berperforma tinggi dengan desain tipis dan elegan.</div>
-                <iframe src="https://www.youtube.com/embed/t7Q8D2JdS7s" allowfullscreen></iframe>
-            </div>
-            <div class="action-buttons">
-                <button class="cart-btn" onclick="tambahKeKeranjang('MacBook', 'Rp 16.500.000', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800')">+ Keranjang</button>
-                <button class="buy-btn" onclick="bukaCheckout('MacBook', 'Rp 16.500.000', 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800')">Beli Sekarang</button>
-            </div>
-        </div>
-
-        <!-- Produk 3: Headset Gaming -->
-        <div class="product-card" data-category="audio">
-            <div>
-                <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800" class="product-img">
-                <span class="badge badge-sent">Pesanan Dikirim</span>
-                <div class="title">Headset Gaming RGB</div>
-                <div class="price">Rp 850.000</div>
-                <div class="desc">Suara surround 7.1 yang menggelegar, mic jernih, dan lampu RGB keren untuk gaming.</div>
-                <iframe src="https://www.youtube.com/embed/u3hmcsfjISc" allowfullscreen></iframe>
-            </div>
-            <div class="action-buttons">
-                <button class="cart-btn" onclick="tambahKeKeranjang('Headset Gaming RGB', 'Rp 850.000', 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800')">+ Keranjang</button>
-                <button class="buy-btn" onclick="bukaCheckout('Headset Gaming RGB', 'Rp 850.000', 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800')">Beli Sekarang</button>
-            </div>
-        </div>
-
-        <!-- Produk 4: Smart Watch -->
-        <div class="product-card" data-category="wearable">
-            <div>
-                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800" class="product-img">
-                <span class="badge badge-done">Pesanan Selesai</span>
-                <div class="title">Smart Watch</div>
-                <div class="price">Rp 4.500.000</div>
-                <div class="desc">Pantau kesehatan harian, kebugaran, dan notifikasi langsung dari pergelangan tangan.</div>
-                <iframe src="https://www.youtube.com/embed/1dlFBUcytZw" allowfullscreen></iframe>
-            </div>
-            <div class="action-buttons">
-                <button class="cart-btn" onclick="tambahKeKeranjang('Smart Watch', 'Rp 4.500.000', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800')">+ Keranjang</button>
-                <button class="buy-btn" onclick="bukaCheckout('Smart Watch', 'Rp 4.500.000', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800')">Beli Sekarang</button>
-            </div>
-        </div>
-
-        <!-- Produk 5: HP Xiaomi -->
-        <div class="product-card" data-category="smartphone">
-            <div>
-                <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800" class="product-img">
-                <span class="badge badge-pending">Belum Dibayar</span>
-                <div class="title">Xiaomi Smartphone</div>
-                <div class="price">Rp 4.999.000</div>
-                <div class="desc">Performa flagship killer, kamera tajam, dan pengisian daya ngebut khas Xiaomi.</div>
-                <iframe src="https://www.youtube.com/embed/lOilUTkEMSk" allowfullscreen></iframe>
-            </div>
-            <div class="action-buttons">
-                <button class="cart-btn" onclick="tambahKeKeranjang('Xiaomi Smartphone', 'Rp 4.999.000', 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800')">+ Keranjang</button>
-                <button class="buy-btn" onclick="bukaCheckout('Xiaomi Smartphone', 'Rp 4.999.000', 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800')">Beli Sekarang</button>
-            </div>
-        </div>
-
-        <!-- Produk 6: Kamera DSLR Canon -->
-        <div class="product-card" data-category="kamera">
-            <div>
-                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800" class="product-img">
-                <span class="badge badge-process">Pesanan Diproses</span>
-                <div class="title">Kamera DSLR Canon</div>
-                <div class="price">Rp 6.750.000</div>
-                <div class="desc">Kamera ideal untuk kreator konten dan fotografer dengan hasil foto tajam serta video Full HD.</div>
-                <iframe src="https://www.youtube.com/embed/msVSnuaxuRs" allowfullscreen></iframe>
-            </div>
-            <div class="action-buttons">
-                <button class="cart-btn" onclick="tambahKeKeranjang('Kamera DSLR Canon', 'Rp 6.750.000', 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800')">+ Keranjang</button>
-                <button class="buy-btn" onclick="bukaCheckout('Kamera DSLR Canon', 'Rp 6.750.000', 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800')">Beli Sekarang</button>
-            </div>
-        </div>
-
-        <!-- Produk 7: Tablet Android Pro -->
-        <div class="product-card" data-category="smartphone">
-            <div>
-                <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800" class="product-img">
-                <span class="badge badge-sent">Pesanan Dikirim</span>
-                <div class="title">Tablet Android Pro</div>
-                <div class="price">Rp 5.400.000</div>
-                <div class="desc">Layar luas beresolusi tinggi, mendukung multitasking lancar untuk bekerja maupun hiburan.</div>
-                <iframe src="https://www.youtube.com/embed/DajRdqQ6sKE" allowfullscreen></iframe>
-            </div>
-            <div class="action-buttons">
-                <button class="cart-btn" onclick="tambahKeKeranjang('Tablet Android Pro', 'Rp 5.400.000', 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800')">+ Keranjang</button>
-                <button class="buy-btn" onclick="bukaCheckout('Tablet Android Pro', 'Rp 5.400.000', 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800')">Beli Sekarang</button>
-            </div>
-        </div>
-
+        <!-- Produk akan dimuat secara otomatis lewat Javascript -->
     </div>
 
     <!-- Script JavaScript -->
@@ -649,10 +534,57 @@
         let keranjangBelanja = [];
         let daftarPesanan = [];
 
+        // --- FUNGSI LOAD PRODUK DARI ADMIN (LOCALSTORAGE) ---
+        document.addEventListener("DOMContentLoaded", () => {
+            muatProdukDariAdmin();
+        });
+
+        function muatProdukDariAdmin() {
+            const container = document.getElementById('catalogContainer');
+            let listProduk = JSON.parse(localStorage.getItem('tokoProduk')) || [];
+
+            container.innerHTML = '';
+
+            if (listProduk.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; font-style: italic; padding: 20px; width: 100%; text-align: center;">Belum ada produk yang ditambahkan oleh admin.</p>';
+                return;
+            }
+
+            listProduk.forEach(prod => {
+                const formattedHarga = "Rp " + Number(prod.harga).toLocaleString('id-ID');
+                
+                // Ubah link standar YouTube menjadi embed link agar bisa diputar di iframe
+                let embedVideoUrl = prod.video;
+                if (prod.video.includes("watch?v=")) {
+                    embedVideoUrl = prod.video.replace("watch?v=", "embed/");
+                } else if (prod.video.includes("youtu.be/")) {
+                    embedVideoUrl = prod.video.replace("youtu.be/", "www.youtube.com/embed/");
+                }
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('data-category', prod.kategori);
+                card.innerHTML = `
+                    <div>
+                        <img src="${prod.foto}" class="product-img" alt="${prod.nama}">
+                        <span class="badge badge-pending">Belum Dibayar</span>
+                        <div class="title">${prod.nama}</div>
+                        <div class="price">${formattedHarga}</div>
+                        <div class="desc">${prod.deskripsi}</div>
+                        <iframe src="${embedVideoUrl}" allowfullscreen></iframe>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="cart-btn" onclick="tambahKeKeranjang('${prod.nama}', '${formattedHarga}', '${prod.foto}')">+ Keranjang</button>
+                        <button class="buy-btn" onclick="bukaCheckout('${prod.nama}', '${formattedHarga}', '${prod.foto}')">Beli Sekarang</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
         // --- SCRIPT DROPDOWN MENU KATEGORI ---
         const dropdownBtn = document.getElementById('kategoriDropdownBtn');
         const dropdownContent = document.getElementById('kategoriDropdown');
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
 
         dropdownBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -752,7 +684,7 @@
                 return;
             }
 
-            daftarPesanan.forEach((pesanan, index) => {
+            daftarPesanan.forEach((pesanan) => {
                 const row = document.createElement('div');
                 row.className = 'cart-item-row';
                 row.innerHTML = `
@@ -774,7 +706,7 @@
         const closeCheckoutModal = document.getElementById('closeCheckoutModal');
         const productNameDisplay = document.getElementById('productNameDisplay');
         
-        let itemCheckoutSementara = null; // Menyimpan produk yang sedang dibeli
+        let itemCheckoutSementara = null;
 
         function bukaCheckout(nama, harga, foto) {
             itemCheckoutSementara = [{ nama, harga, foto }];
@@ -789,7 +721,7 @@
             }
             
             cartModal.classList.remove('show');
-            itemCheckoutSementara = [...keranjangBelanja]; // Ambil semua dari keranjang
+            itemCheckoutSementara = [...keranjangBelanja];
             
             let daftarProduk = keranjangBelanja.map(item => `${item.nama} (${item.harga})`).join(', ');
             productNameDisplay.textContent = `Produk dari Keranjang: ${daftarProduk}`;
@@ -817,7 +749,6 @@
                 return;
             }
 
-            // Masukkan item yang dibeli ke dalam daftar pesanan dengan status default "Pesanan Diproses"
             if (itemCheckoutSementara && itemCheckoutSementara.length > 0) {
                 itemCheckoutSementara.forEach(item => {
                     daftarPesanan.push({
@@ -829,10 +760,8 @@
                 });
             }
 
-            // Update label navbar menu pesan
             pesanMenuLink.textContent = `Pesan (${daftarPesanan.length})`;
 
-            // Jika dibeli dari keranjang, kosongkan keranjang
             if (itemCheckoutSementara.length > 1 || (keranjangBelanja.length > 0 && productNameDisplay.textContent.includes('Keranjang'))) {
                 keranjangBelanja = [];
                 cartMenuLink.textContent = `🛒 Keranjang (0)`;
@@ -840,7 +769,6 @@
 
             checkoutModal.classList.remove('show');
             
-            // Reset Form
             document.getElementById('custName').value = '';
             document.getElementById('custPhone').value = '';
             document.getElementById('custAddress').value = '';
@@ -848,15 +776,17 @@
             showToast(`Pesanan berhasil dibuat! Terima kasih, ${nama}. Pembayaran via ${metode}.`);
         }
 
+        // --- FILTER KATEGORI & PENCARIAN ---
         const filterBtns = document.querySelectorAll('.cat-btn');
-        const productCards = document.querySelectorAll('.product-card');
         const searchInput = document.getElementById('searchInput');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
 
         function jalankanFilter(filterValue) {
             filterBtns.forEach(b => b.classList.remove('active'));
             const tombolYangSesuai = document.querySelector(`.cat-btn[data-filter="${filterValue}"]`);
             if(tombolYangSesuai) tombolYangSesuai.classList.add('active');
 
+            const productCards = document.querySelectorAll('.product-card');
             productCards.forEach(card => {
                 const category = card.getAttribute('data-category');
                 if (filterValue === 'all' || category === filterValue) {
@@ -883,6 +813,8 @@
 
         searchInput.addEventListener('input', (e) => {
             const searchText = e.target.value.toLowerCase();
+            const productCards = document.querySelectorAll('.product-card');
+            
             productCards.forEach(card => {
                 const title = card.querySelector('.title').textContent.toLowerCase();
                 const desc = card.querySelector('.desc').textContent.toLowerCase();
