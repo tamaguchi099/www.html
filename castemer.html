@@ -523,18 +523,25 @@
         </div>
     </div>
 
-    <!-- Katalog Produk (Otomatis dari Admin via localStorage) -->
+    <!-- Katalog Produk -->
     <div class="catalog-container" id="catalogContainer">
-        <!-- Produk akan dimuat secara otomatis lewat Javascript -->
+        <!-- Produk dimuat otomatis via Javascript -->
     </div>
 
     <!-- Script JavaScript -->
     <script>
-        // --- INISIALISASI DATA DEFAULT BARANG & VIDEO OTOMATIS (DIPERBAIKI) ---
+        // --- AUTO CLEAR CACHE & FORMAT DATA DEFAULT YANG DISAMAKAN DENGAN ADMIN ---
         function cekDanInisialisasiDataDefault() {
+            const CURRENT_VERSION = "v3.0_fix_keys"; 
+            const savedVersion = localStorage.getItem('tokoVersiApp');
+
+            if (savedVersion !== CURRENT_VERSION) {
+                localStorage.removeItem('tokoProduk');
+                localStorage.setItem('tokoVersiApp', CURRENT_VERSION);
+            }
+
             let listProduk = JSON.parse(localStorage.getItem('tokoProduk'));
             
-            // Jika data belum ada, atau struktur data lama belum lengkap, perbarui dengan data default yang valid
             if (!listProduk || listProduk.length === 0) {
                 const produkDefault = [
                     {
@@ -558,11 +565,9 @@
             }
         }
 
-        // Array untuk menyimpan data keranjang dan pesanan
         let keranjangBelanja = [];
         let daftarPesanan = [];
 
-        // --- FUNGSI LOAD PRODUK DARI LOCALSTORAGE (TERHUBUNG KE ADMIN) ---
         document.addEventListener("DOMContentLoaded", () => {
             cekDanInisialisasiDataDefault(); 
             muatProdukDariAdmin();
@@ -575,15 +580,23 @@
             container.innerHTML = '';
 
             if (listProduk.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; font-style: italic; padding: 20px; width: 100%; text-align: center;">Belum ada produk yang ditambahkan oleh admin.</p>';
+                container.innerHTML = '<p style="color: #64748b; font-style: italic; padding: 20px; width: 100%; text-align: center;">Belum ada produk yang ditambahkan.</p>';
                 return;
             }
 
             listProduk.forEach(prod => {
-                const formattedHarga = "Rp " + Number(prod.harga).toLocaleString('id-ID');
+                // Mendukung properti dari berbagai versi key (nama/namaProduk, foto/gambar, video/linkVideo)
+                const namaProd = prod.nama || prod.namaProduk || "Tanpa Nama";
+                const hargaRaw = prod.harga || prod.hargaProduk || "0";
+                const kategoriProd = prod.kategori || "Umum";
+                const deskripsiProd = prod.deskripsi || prod.deskripsiProduk || "-";
+                const fotoProd = prod.foto || prod.gambar || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500";
+                const videoProd = prod.video || prod.linkVideo || "";
+
+                const formattedHarga = "Rp " + Number(hargaRaw).toLocaleString('id-ID');
                 
-                // Pastikan link video aman dan terkonversi dengan benar ke format embed iframe
-                let embedVideoUrl = prod.video || "";
+                // Konversi otomatis link YouTube reguler ke format embed iframe
+                let embedVideoUrl = videoProd;
                 if (embedVideoUrl.includes("watch?v=")) {
                     embedVideoUrl = embedVideoUrl.replace("watch?v=", "embed/");
                 } else if (embedVideoUrl.includes("youtu.be/")) {
@@ -592,19 +605,19 @@
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.setAttribute('data-category', prod.kategori);
+                card.setAttribute('data-category', kategoriProd);
                 card.innerHTML = `
                     <div>
-                        <img src="${prod.foto}" class="product-img" alt="${prod.nama}">
+                        <img src="${fotoProd}" class="product-img" alt="${namaProd}">
                         <span class="badge badge-pending">Ready Stock</span>
-                        <div class="title">${prod.nama}</div>
+                        <div class="title">${namaProd}</div>
                         <div class="price">${formattedHarga}</div>
-                        <div class="desc">${prod.deskripsi}</div>
+                        <div class="desc">${deskripsiProd}</div>
                         ${embedVideoUrl ? `<iframe src="${embedVideoUrl}" allowfullscreen></iframe>` : '<div style="background:#000; color:#fff; height:160px; display:flex; align-items:center; justify-content:center; border-radius:12px; margin-bottom:15px; font-size:0.85rem;">Video tidak tersedia</div>'}
                     </div>
                     <div class="action-buttons">
-                        <button class="cart-btn" onclick="tambahKeKeranjang('${prod.nama}', '${formattedHarga}', '${prod.foto}')">+ Keranjang</button>
-                        <button class="buy-btn" onclick="bukaCheckout('${prod.nama}', '${formattedHarga}', '${prod.foto}')">Beli Sekarang</button>
+                        <button class="cart-btn" onclick="tambahKeKeranjang('${namaProd}', '${formattedHarga}', '${fotoProd}')">+ Keranjang</button>
+                        <button class="buy-btn" onclick="bukaCheckout('${namaProd}', '${formattedHarga}', '${fotoProd}')">Beli Sekarang</button>
                     </div>
                 `;
                 container.appendChild(card);
