@@ -530,11 +530,11 @@
 
     <!-- Script JavaScript -->
     <script>
-        // --- INISIALISASI DATA DEFAULT BARANG & VIDEO OTOMATIS ---
+        // --- INISIALISASI DATA DEFAULT BARANG & VIDEO OTOMATIS (DIPERBAIKI) ---
         function cekDanInisialisasiDataDefault() {
             let listProduk = JSON.parse(localStorage.getItem('tokoProduk'));
             
-            // Jika penyimpanan lokal masih kosong, isi otomatis dengan data default & video
+            // Jika data belum ada, atau struktur data lama belum lengkap, perbarui dengan data default yang valid
             if (!listProduk || listProduk.length === 0) {
                 const produkDefault = [
                     {
@@ -543,7 +543,7 @@
                         kategori: "Smartphone",
                         deskripsi: "Smartphone flagship dengan performa tinggi dan kamera profesional.",
                         foto: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500",
-                        video: "https://www.youtube.com/watch?v=Zi_AA3_l4G8"
+                        video: "https://www.youtube.com/embed/Zi_AA3_l4G8"
                     },
                     {
                         nama: "Laptop ASUS ROG",
@@ -551,7 +551,7 @@
                         kategori: "Laptop",
                         deskripsi: "Laptop gaming bertenaga dengan grafis tajam untuk pengalaman maksimal.",
                         foto: "https://images.unsplash.com/photo-1593642634367-d95a832e8e0c?w=500",
-                        video: "https://www.youtube.com/watch?v=q626o238t9Q"
+                        video: "https://www.youtube.com/embed/q626o238t9Q"
                     }
                 ];
                 localStorage.setItem('tokoProduk', JSON.stringify(produkDefault));
@@ -564,7 +564,7 @@
 
         // --- FUNGSI LOAD PRODUK DARI LOCALSTORAGE (TERHUBUNG KE ADMIN) ---
         document.addEventListener("DOMContentLoaded", () => {
-            cekDanInisialisasiDataDefault(); // Jalankan inisialisasi data otomatis saat pertama kali dibuka
+            cekDanInisialisasiDataDefault(); 
             muatProdukDariAdmin();
         });
 
@@ -582,12 +582,12 @@
             listProduk.forEach(prod => {
                 const formattedHarga = "Rp " + Number(prod.harga).toLocaleString('id-ID');
                 
-                // Ubah link standar YouTube menjadi embed link agar bisa diputar di iframe
-                let embedVideoUrl = prod.video;
-                if (prod.video && prod.video.includes("watch?v=")) {
-                    embedVideoUrl = prod.video.replace("watch?v=", "embed/");
-                } else if (prod.video && prod.video.includes("youtu.be/")) {
-                    embedVideoUrl = prod.video.replace("youtu.be/", "www.youtube.com/embed/");
+                // Pastikan link video aman dan terkonversi dengan benar ke format embed iframe
+                let embedVideoUrl = prod.video || "";
+                if (embedVideoUrl.includes("watch?v=")) {
+                    embedVideoUrl = embedVideoUrl.replace("watch?v=", "embed/");
+                } else if (embedVideoUrl.includes("youtu.be/")) {
+                    embedVideoUrl = embedVideoUrl.replace("youtu.be/", "www.youtube.com/embed/");
                 }
 
                 const card = document.createElement('div');
@@ -600,7 +600,7 @@
                         <div class="title">${prod.nama}</div>
                         <div class="price">${formattedHarga}</div>
                         <div class="desc">${prod.deskripsi}</div>
-                        <iframe src="${embedVideoUrl}" allowfullscreen></iframe>
+                        ${embedVideoUrl ? `<iframe src="${embedVideoUrl}" allowfullscreen></iframe>` : '<div style="background:#000; color:#fff; height:160px; display:flex; align-items:center; justify-content:center; border-radius:12px; margin-bottom:15px; font-size:0.85rem;">Video tidak tersedia</div>'}
                     </div>
                     <div class="action-buttons">
                         <button class="cart-btn" onclick="tambahKeKeranjang('${prod.nama}', '${formattedHarga}', '${prod.foto}')">+ Keranjang</button>
