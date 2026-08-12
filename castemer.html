@@ -129,7 +129,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
         }
@@ -476,6 +476,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             cekDanInisialisasiDataDefault(); 
             muatProdukDariAdmin();
+            updateDataPesanCustomer();
         });
 
         function muatProdukDariAdmin() {
@@ -568,30 +569,57 @@
         }
 
         const pesanModal = document.getElementById('pesanModal');
-        function bukaMenuPesan(e) { e.preventDefault(); renderDaftarPesan(); pesanModal.classList.add('show'); }
+        function bukaMenuPesan(e) { 
+            e.preventDefault(); 
+            renderDaftarPesan(); 
+            pesanModal.classList.add('show'); 
+        }
         document.getElementById('closePesanModal').addEventListener('click', () => pesanModal.classList.remove('show'));
 
+        function updateDataPesanCustomer() {
+            let semuaPesanan = JSON.parse(localStorage.getItem('daftarPesananAdmin')) || [];
+            daftarPesanan = semuaPesanan;
+            document.getElementById('pesanMenuLink').textContent = `Pesan(${daftarPesanan.length})`;
+        }
+
+        // Auto update status di menu Pesan jika admin mengubahnya di admin.html
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'daftarPesananAdmin') {
+                updateDataPesanCustomer();
+            }
+        });
+
         function renderDaftarPesan() {
+            updateDataPesanCustomer();
             const container = document.getElementById('pesanItemsContainer');
             container.innerHTML = '';
             if (daftarPesanan.length === 0) {
                 container.innerHTML = '<div class="empty-cart-text">Belum ada pesanan.</div>';
                 return;
             }
-            daftarPesanan.forEach((pesanan) => {
-                const row = document.createElement('div');
-                row.className = 'cart-item-row';
-                row.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <img src="${pesanan.foto}" style="width: 35px; height: 35px; object-fit: cover; border-radius: 6px;">
-                        <div>
-                            <div style="font-weight: 700;">${pesanan.nama}</div>
-                            <div style="color: #3b82f6; font-size: 0.8rem;">${pesanan.harga}</div>
+            daftarPesanan.forEach((p) => {
+                let badgeBg = '#fef08a';
+                let badgeColor = '#854d0e';
+                if (p.status === 'Dikirim') {
+                    badgeBg = '#dbeafe';
+                    badgeColor = '#1e40af';
+                } else if (p.status === 'Selesai') {
+                    badgeBg = '#dcfce7';
+                    badgeColor = '#166534';
+                }
+
+                container.innerHTML += `
+                    <div class="cart-item-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <img src="${p.foto}" style="width: 35px; height: 35px; object-fit: cover; border-radius: 6px;" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500'">
+                            <div>
+                                <div style="font-weight: 700;">${p.namaProduk}</div>
+                                <div style="color: #3b82f6; font-size: 0.8rem;">${p.harga}</div>
+                            </div>
                         </div>
+                        <span style="font-size: 0.75rem; color: ${badgeColor}; font-weight: bold; background: ${badgeBg}; padding: 4px 8px; border-radius: 6px;">${p.status}</span>
                     </div>
-                    <span style="font-size: 0.7rem; color: #166534; font-weight: bold; background: #dcfce7; padding: 2px 6px; border-radius: 4px;">Diproses</span>
                 `;
-                container.appendChild(row);
             });
         }
 
@@ -621,11 +649,26 @@
 
             if (!nama || !telp || !alamat) { alert("Lengkapi form data diri!"); return; }
 
+            // Ambil data lama dari localStorage admin agar tidak tertimpa
+            let semuaPesanan = JSON.parse(localStorage.getItem('daftarPesananAdmin')) || [];
+
             itemCheckoutSementara.forEach(item => {
-                daftarPesanan.push({ nama: item.nama, harga: item.harga, foto: item.foto });
+                semuaPesanan.push({
+                    namaProduk: item.nama,
+                    harga: item.harga,
+                    foto: item.foto,
+                    namaCustomer: nama,
+                    telp: telp,
+                    alamat: alamat,
+                    status: 'Dikemas' // Status awal saat customer checkout
+                });
             });
 
-            document.getElementById('pesanMenuLink').textContent = `Pesan(${daftarPesanan.length})`;
+            // Simpan kembali agar terbaca di admin.html
+            localStorage.setItem('daftarPesananAdmin', JSON.stringify(semuaPesanan));
+
+            updateDataPesanCustomer();
+
             if (itemCheckoutSementara.length > 1) {
                 keranjangBelanja = [];
                 cartMenuLink.textContent = `🛒(0)`;
