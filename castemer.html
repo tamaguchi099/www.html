@@ -418,9 +418,8 @@
     <div class="catalog-container" id="catalogContainer"></div>
 
     <script>
-        // SCRIPT AUTO-FIX: Memperbarui data lama yang error/kosong secara otomatis
         function cekDanInisialisasiDataDefault() {
-            const CURRENT_VERSION = "v4.0_fix_all_media"; 
+            const CURRENT_VERSION = "v5.0_fix_final_video"; 
             const savedVersion = localStorage.getItem('tokoVersiApp');
 
             if (savedVersion !== CURRENT_VERSION) {
@@ -473,17 +472,20 @@
                 const kategoriProd = prod.kategori || "Umum";
                 const deskripsiProd = prod.deskripsi || prod.deskripsiProduk || "-";
                 
-                // Memastikan fallback foto aman jika kosong
-                let fotoProd = prod.foto || prod.gambar;
-                if (!fotoProd || fotoProd.trim() === "") {
-                    fotoProd = "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500";
-                }
-
-                let videoProd = prod.video || prod.linkVideo || "";
-                if (videoProd.includes("watch?v=")) {
-                    videoProd = videoProd.replace("watch?v=", "embed/");
-                } else if (videoProd.includes("youtu.be/")) {
-                    videoProd = videoProd.replace("youtu.be/", "www.youtube.com/embed/");
+                let fotoProd = prod.foto || prod.gambar || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500";
+                
+                // LOGIKA PERBAIKAN LINK VIDEO
+                let rawVideo = prod.video || prod.linkVideo || "";
+                let videoEmbed = "";
+                if (rawVideo.includes("youtube.com/watch?v=")) {
+                    videoEmbed = rawVideo.replace("watch?v=", "embed/");
+                } else if (rawVideo.includes("youtu.be/")) {
+                    let id = rawVideo.split("youtu.be/")[1].split("?")[0];
+                    videoEmbed = "https://www.youtube.com/embed/" + id;
+                } else if (rawVideo.includes("youtube.com/embed/")) {
+                    videoEmbed = rawVideo;
+                } else if (rawVideo !== "") {
+                    videoEmbed = "https://www.youtube.com/embed/" + rawVideo;
                 }
 
                 const formattedHarga = "Rp " + Number(hargaRaw).toLocaleString('id-ID');
@@ -498,7 +500,7 @@
                         <div class="title">${namaProd}</div>
                         <div class="price">${formattedHarga}</div>
                         <div class="desc">${deskripsiProd}</div>
-                        ${videoProd ? `<iframe src="${videoProd}" allowfullscreen></iframe>` : '<div style="background:#000; color:#fff; height:150px; display:flex; align-items:center; justify-content:center; border-radius:10px; margin-bottom:12px; font-size:0.8rem;">Video tidak tersedia</div>'}
+                        ${videoEmbed ? `<iframe src="${videoEmbed}" allowfullscreen></iframe>` : '<div style="background:#000; color:#fff; height:150px; display:flex; align-items:center; justify-content:center; border-radius:10px; margin-bottom:12px; font-size:0.8rem;">Video tidak tersedia</div>'}
                     </div>
                     <div class="action-buttons">
                         <button class="cart-btn" onclick="tambahKeKeranjang('${namaProd}', '${formattedHarga}', '${fotoProd}')">+ Keranjang</button>
@@ -509,7 +511,6 @@
             });
         }
 
-        // Script Dropdown & Modal Pendukung
         const dropdownBtn = document.getElementById('kategoriDropdownBtn');
         const dropdownContent = document.getElementById('kategoriDropdown');
         dropdownBtn.addEventListener('click', (e) => { e.preventDefault(); dropdownContent.classList.toggle('show'); });
@@ -620,7 +621,6 @@
             showToast("Pesanan berhasil dibuat!");
         }
 
-        // Filter & Search
         const filterBtns = document.querySelectorAll('.cat-btn, .dropdown-item');
         filterBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
